@@ -86,7 +86,7 @@ public class EstadisticasArray {
 			producto *= num;
 			tamano++;
 		}
-		media = (double) Math.pow(producto,1/tamano);
+		media = (double) Math.pow(producto, 1 / tamano);
 		return media;
 
 	}
@@ -107,22 +107,23 @@ public class EstadisticasArray {
 		int tamano = copiaVector.length;
 		Arrays.sort(copiaVector);
 
-		if (tamano % 2 != 0) {	//impar
-			mediana = copiaVector[tamano/2];
-		}else {					//par
-			int primer=(tamano-2);
-			int segundo=(tamano-1);
-			if(primer % 2!=0) 
-				primer = (primer/2) +1;
+		if (tamano % 2 != 0) { // impar
+			mediana = copiaVector[tamano / 2];
+		} else { // par
+			int primer = (tamano - 2);
+			int segundo = (tamano - 1);
+			if (primer % 2 != 0)
+				primer = (primer / 2) + 1;
 			else
-				primer = primer/2;
-			if(segundo % 2!=0) 
-				segundo = (segundo/2) +1;
+				primer = primer / 2;
+			if (segundo % 2 != 0)
+				segundo = (segundo / 2) + 1;
 			else
-				segundo = segundo/2;
-			mediana = (float)(copiaVector[primer] + copiaVector[segundo]) / 2;
-			
-		}return mediana;
+				segundo = segundo / 2;
+			mediana = (float) (copiaVector[primer] + copiaVector[segundo]) / 2;
+
+		}
+		return mediana;
 	}
 
 	/**
@@ -139,10 +140,11 @@ public class EstadisticasArray {
 		int tamano = 0;
 
 		for (int num : vector) {
-			tamano = tamano++;
-			sumatorio = sumatorio + (num - mediaAritmetica());
+			sumatorio += Math.pow((num - mediaAritmetica()), 2);
+			tamano++;
 		}
-		float varianza = (float) (Math.pow(sumatorio, 2) / (tamano - 1));
+		System.out.println(sumatorio);
+		float varianza = (float) sumatorio / (tamano - 1);
 		return varianza;
 	}
 
