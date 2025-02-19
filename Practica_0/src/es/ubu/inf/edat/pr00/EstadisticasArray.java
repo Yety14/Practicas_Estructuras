@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 /**
  * 
- * Clase que permite el calculo de los momentos estadisticos sobre el 
- * contenido de un array de enteros almacenado en la misma.
+ * Clase que permite el calculo de los momentos estadisticos sobre el contenido
+ * de un array de enteros almacenado en la misma.
  * 
  * Otras medidas estadisticas: Moda, Varianza, desviacion tipica
  * 
@@ -14,17 +14,17 @@ import java.util.Arrays;
  */
 public class EstadisticasArray {
 
-	public int [] vector;
+	public int[] vector;
 
 	/**
 	 * 
 	 * @param contenido
 	 */
-	public void rellenaVector(int[] contenido){
+	public void rellenaVector(int[] contenido) {
 
 		vector = new int[contenido.length];
 
-		for (int i=1; i<contenido.length; i++){
+		for (int i = 1; i < contenido.length; i++) {
 			vector[i] = contenido[i];
 		}
 
@@ -39,13 +39,13 @@ public class EstadisticasArray {
 	 * @return media aritmetica del contenido de la lista
 	 */
 
-	public float mediaAritmetica(){
+	public float mediaAritmetica() {
 
 		float media = 0;
-		float sumatorio = (Float) null; 
-		int tamano = 1; 
+		float sumatorio = 0;
+		int tamano = 1;
 
-		for ( int num : vector ){
+		for (int num : vector) {
 			tamano = tamano + 1;
 			sumatorio = sumatorio + num;
 		}
@@ -55,7 +55,7 @@ public class EstadisticasArray {
 		return media;
 
 	}
-	
+
 	/**
 	 * Metodo que calcula la media geometrica del contenido de la lista.
 	 * 
@@ -64,20 +64,20 @@ public class EstadisticasArray {
 	 * 
 	 * @return media geometrica del contenido de la lista
 	 */
-	
-	public double mediaGeometrica(){
-		
+
+	public double mediaGeometrica() {
+
 		double media = 0;
-		float producto = 0; 		
-		
-		for (int i=0; i<vector.length-1; i++){
-			producto = producto * vector [i];
+		float producto = 0;
+
+		for (int i = 0; i < vector.length - 1; i++) {
+			producto = producto * vector[i];
 		}
-		
+
 		media = (float) Math.sqrt(producto);
-		
+
 		return media;
-		
+
 	}
 
 	/**
@@ -89,19 +89,19 @@ public class EstadisticasArray {
 	 * @return mediana del contenido de la lista
 	 */
 
-	public float mediana(){
+	public float mediana() {
 
 		float mediana = 0;
-		int [] copiaVector = vector.clone();
+		int[] copiaVector = vector.clone();
 		int tamano = copiaVector.length;
 
 		Arrays.sort(copiaVector);
 
-		if (copiaVector.length%2 == 0)
-			mediana = copiaVector[tamano/2];
+		if (copiaVector.length % 2 == 0)
+			mediana = copiaVector[tamano / 2];
 		else
-			mediana = ( copiaVector[tamano/2] + copiaVector[tamano+1/2] ) / 2;
-		
+			mediana = (copiaVector[tamano / 2] + copiaVector[tamano + 1 / 2]) / 2;
+
 		return mediana;
 	}
 
@@ -114,9 +114,17 @@ public class EstadisticasArray {
 	 * 
 	 * @return
 	 */
-	public float varianza(){
+	public float varianza() {
 		// TODO A completar por el alumno
-		return 0;
+		float sumatorio = 0;
+		int tamano = 0;
+
+		for (int num : vector) {
+			tamano = tamano++;
+			sumatorio = sumatorio + (num - mediaAritmetica());
+		}
+		float varianza = (float) (Math.pow(sumatorio, 2) / (tamano - 1));
+		return varianza;
 	}
-	
+
 }
