@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"es.ubu.gii.edat.s01","l":"EnteroEnRango"},{"p":"es.ubu.gii.edat.s01","l":"EnteroEnRango.EnteroEnRangoIterator"}];updateSearchResults();
