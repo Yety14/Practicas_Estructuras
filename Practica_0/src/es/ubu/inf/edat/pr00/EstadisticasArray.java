@@ -115,7 +115,6 @@ public class EstadisticasArray {
 	 * @return
 	 */
 	public float varianza() {
-		// TODO A completar por el alumno
 		float sumatorio = 0;
 		int tamano = 0;
 
