@@ -17,6 +17,9 @@ public class EstadisticasArray {
 	public int[] vector;
 
 	/**
+	 * En el bucle for la variable i se estaba inicializando a 1 en vez de a 0,
+	 * haciendo que en vez de empezar a rellenar el vector en el primer hueco lo
+	 * haga en el segundo, haciendo que se inicialice mal.
 	 * 
 	 * @param contenido
 	 */
@@ -24,7 +27,7 @@ public class EstadisticasArray {
 
 		vector = new int[contenido.length];
 
-		for (int i=0; i<contenido.length; i++){
+		for (int i = 0; i < contenido.length; i++) {
 			vector[i] = contenido[i];
 		}
 
@@ -36,20 +39,27 @@ public class EstadisticasArray {
 	 * La descripcion de ese calculo se puede encontrar en:
 	 * https://es.wikipedia.org/wiki/Media_aritm%C3%A9tica
 	 * 
+	 * El sumatorio estaba inicializado a null en vez de a 0, porque si no luego
+	 * suma a un valor nulo. El tamaño estaba inicializado a 1 en vez de a 0, lo
+	 * queno está permitido en java.
+	 * 
+	 * El tamaño estaba inicializado a 1 en vez de a 0, haciendo que luego va
+	 * recorriendo mal el array.
+	 * 
 	 * @return media aritmetica del contenido de la lista
 	 */
 
 	public float mediaAritmetica() {
 
 		float media = 0;
-		float sumatorio = 0; 
-		float tamano = 0; 
+		float sumatorio = 0;
+		float tamano = 0;
 
-		for ( int num : vector ){
+		for (int num : vector) {
 			sumatorio += num;
 			tamano++;
 		}
-		
+
 		media = sumatorio / tamano;
 
 		return media;
@@ -62,16 +72,17 @@ public class EstadisticasArray {
 	 * La descripcion de ese calculo se puede encontrar en:
 	 * https://es.wikipedia.org/wiki/Media_geom%C3%A9trica
 	 * 
+	 * 
 	 * @return media geometrica del contenido de la lista
 	 */
 
 	public double mediaGeometrica() {
 
 		double media = 0;
-		double producto = 1; 		
+		double producto = 1;
 		float tamano = 0;
-		
-		for ( int num : vector ){
+
+		for (int num : vector) {
 			producto *= num;
 			tamano++;
 		}
