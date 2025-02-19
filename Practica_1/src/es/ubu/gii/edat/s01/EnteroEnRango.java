@@ -36,7 +36,6 @@ public class EnteroEnRango implements Iterable<Integer> {
 	}
 
     public void sumar(EnteroEnRango otro) {
-//    	System.out.print(otro.toString()+"\n"+this.toString()+"\n\n");
     	if(otro.valor+this.valor>maximo){
 			throw new IllegalArgumentException ("Numero fuera de rango");
     	}else {
@@ -65,17 +64,17 @@ public class EnteroEnRango implements Iterable<Integer> {
 
     private class EnteroEnRangoIterator implements Iterator<Integer> {
     	
-    	private int valorActual=minimo-1;////////////////////
+    	private int valorActual=minimo;////////////////////////////////
     	private int maximoActual=maximo;
     	
         @Override
         public boolean hasNext() {
-        	return this.valorActual<this.maximoActual;
+        	return this.valorActual<=this.maximoActual;
         }
 
         @Override
         public Integer next() {
-        	return this.valorActual+=1;
+        	return this.valorActual++;
         }
     }
 }
