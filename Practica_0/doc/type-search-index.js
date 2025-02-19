@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"es.ubu.inf.edat.pr00","l":"EstadisticasArray"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"es.ubu.inf.edat.pr00","l":"EstadisticasArray"},{"p":"es.ubu.inf.edat.pr00","l":"EstadisticasArrayTest"}];updateSearchResults();
