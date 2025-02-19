@@ -76,7 +76,6 @@ public class EstadisticasArray {
 			tamano++;
 		}
 		media = (double) Math.pow(producto,1/tamano);
-		System.out.print(media);
 		return media;
 
 	}
@@ -95,15 +94,24 @@ public class EstadisticasArray {
 		float mediana = 0;
 		int[] copiaVector = vector.clone();
 		int tamano = copiaVector.length;
-
 		Arrays.sort(copiaVector);
 
-		if (copiaVector.length % 2 == 0)
-			mediana = copiaVector[tamano / 2];
-		else
-			mediana = (copiaVector[tamano / 2] + copiaVector[tamano + 1 / 2]) / 2;
-
-		return mediana;
+		if (tamano % 2 != 0) {	//impar
+			mediana = copiaVector[tamano/2];
+		}else {					//par
+			int primer=(tamano-2);
+			int segundo=(tamano-1);
+			if(primer % 2!=0) 
+				primer = (primer/2) +1;
+			else
+				primer = primer/2;
+			if(segundo % 2!=0) 
+				segundo = (segundo/2) +1;
+			else
+				segundo = segundo/2;
+			mediana = (float)(copiaVector[primer] + copiaVector[segundo]) / 2;
+			
+		}return mediana;
 	}
 
 	/**
