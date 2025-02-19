@@ -47,7 +47,7 @@ public class EstadisticasArrayTest {
 
 		estadisticas.rellenaVector(arrayPrueba);
 
-		System.out.println("-- Prueba Impares --");
+		System.out.println("\n-- Prueba Impares --");
 		System.out.println("Media Aritmetica: " + estadisticas.mediaAritmetica());
 		assertEquals(28.28, estadisticas.mediaAritmetica(), 0.01);
 
