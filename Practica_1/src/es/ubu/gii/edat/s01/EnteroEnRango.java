@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.lang.IllegalArgumentException ;
 
 public class EnteroEnRango implements Iterable<Integer> {
-
+//hola
 	private int valor;
 	private int minimo;
 	private int maximo;
