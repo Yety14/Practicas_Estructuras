@@ -24,7 +24,7 @@ public class EstadisticasArray {
 
 		vector = new int[contenido.length];
 
-		for (int i=1; i<contenido.length; i++){
+		for (int i=0; i<contenido.length; i++){
 			vector[i] = contenido[i];
 		}
 
@@ -42,14 +42,14 @@ public class EstadisticasArray {
 	public float mediaAritmetica(){
 
 		float media = 0;
-		float sumatorio = (Float) null; 
-		int tamano = 1; 
+		float sumatorio = 0; 
+		float tamano = 0; 
 
 		for ( int num : vector ){
-			tamano = tamano + 1;
-			sumatorio = sumatorio + num;
+			sumatorio += num;
+			tamano++;
 		}
-
+		
 		media = sumatorio / tamano;
 
 		return media;
@@ -68,14 +68,15 @@ public class EstadisticasArray {
 	public double mediaGeometrica(){
 		
 		double media = 0;
-		float producto = 0; 		
+		double producto = 1; 		
+		float tamano = 0;
 		
-		for (int i=0; i<vector.length-1; i++){
-			producto = producto * vector [i];
+		for ( int num : vector ){
+			producto *= num;
+			tamano++;
 		}
-		
-		media = (float) Math.sqrt(producto);
-		
+		media = (double) Math.pow(producto,1/tamano);
+		System.out.print(media);
 		return media;
 		
 	}
