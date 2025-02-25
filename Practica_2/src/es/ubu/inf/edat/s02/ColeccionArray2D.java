@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 public class ColeccionArray2D<E> extends AbstractCollection<E> {
 
 	public E[][] array;// TODO completar con los atributos que se necesiten para almacenar los datos
-							// como se pide en el enunciado.
+						// como se pide en el enunciado.
 
 	public ColeccionArray2D(E[][] array) {
 		for (int i = 0; i <= array.length; i++) {
@@ -16,19 +16,23 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 	}
 
 	public E set(int posicion, E dato) {
-		int filas=array[0].length;//El número de filas
-		int columnas=array.length;//El número de columnas
+		int fila = 0;
+		int col = 0;// hacer como si fuese todo una línea
+		int columnas = array[0].length;// El número de columnas
 
-		
-		if (posicion >= 0 && posicion <= columnas) {
-			Math.ceilMod(posicion, array.length);
-			//array[][] = dato;
-		return a;
+		fila = posicion / columnas;
+		col = posicion % columnas;
+
+		if (posicion >= 0 && posicion <= array.length) {
+			array[fila][col] = dato;
+			return array[fila][col];
+		} else {
+			throw new IndexOutOfBoundsException("Fuera de rango");
 		}
 	}
 
 	private class Iterator2D implements Iterator<E> {
-		Iterator2D iterator=new Iterator2D();
+		Iterator2D iterator = new Iterator2D();
 		private int filaActual = 0;
 		private int columnaActual = 0;
 
@@ -48,7 +52,7 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 
 		@Override
 		public void remove() {
-			array[filaActual][columnaActual]=null; 
+			array[filaActual][columnaActual] = null;
 		}
 
 	}
