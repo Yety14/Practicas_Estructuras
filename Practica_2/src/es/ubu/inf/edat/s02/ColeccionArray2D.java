@@ -1,4 +1,4 @@
-package es.ubu.inf.edat.pr02;
+package es.ubu.inf.edat.Practica_2;
 
 
 import java.util.AbstractCollection;
@@ -13,8 +13,8 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 		// TODO Instanciar la clase e inicializar contenedores de datos
 	}
 
-	public E set (int posición, E dato) {
-		// TODO Completar el metodo para modificar el contenido de una posición del array 2D
+	public E set (int posiciï¿½n, E dato) {
+		// TODO Completar el metodo para modificar el contenido de una posiciï¿½n del array 2D
 	}
 
 	private class Iterator2D implements Iterator<E> {
