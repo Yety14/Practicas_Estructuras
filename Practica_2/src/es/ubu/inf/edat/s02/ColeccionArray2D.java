@@ -16,20 +16,14 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 	}
 
 	public E set(int posicion, E dato) {
-		for(int i=0; i<=posicion; i++) {
-			
-		}
-		int fila = 0;
-		int col = 0;// hacer como si fuese todo una línea
-		int filas=array.length/array[0].length;//El número de filas
-		int columnas=array.length/array.length;//El número de filas
+		int filas=array[0].length;//El número de filas
+		int columnas=array.length;//El número de columnas
 
-		col=posicion/filas;
-		fila=posicion/columnas;
 		
-		if (posicion >= 0 && posicion <= array.length) {
+		if (posicion >= 0 && posicion <= columnas) {
 			Math.ceilMod(posicion, array.length);
-			array[][] = dato;
+			//array[][] = dato;
+		return a;
 		}
 	}
 
