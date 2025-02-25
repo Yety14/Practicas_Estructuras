@@ -24,8 +24,9 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 		col = posicion % columnas;
 
 		if (posicion >= 0 && posicion <= array.length) {
+			E valorAnterior = array[fila][col];
 			array[fila][col] = dato;
-			return array[fila][col];
+			return valorAnterior;
 		} else {
 			throw new IndexOutOfBoundsException("Fuera de rango");
 		}
