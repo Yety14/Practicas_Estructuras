@@ -27,6 +27,16 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 	    array[fila][col] = dato;
 	    return valorAnterior;
 	}
+		@Override
+		public Iterator<E> iterator() {
+			return new Iterator2D();
+		}
+
+		@Override
+		public int size() {
+			return (array.length*array[0].length);
+		}
+	
 
 	private class Iterator2D implements Iterator<E> {
 		Iterator2D iterator = new Iterator2D();
