@@ -6,30 +6,26 @@ import java.util.NoSuchElementException;
 
 public class ColeccionArray2D<E> extends AbstractCollection<E> {
 
-	public E[][] array;// TODO completar con los atributos que se necesiten para almacenar los datos
-						// como se pide en el enunciado.
+	public E[][] array;
 
 	public ColeccionArray2D(E[][] array) {
-		for (int i = 0; i <= array.length; i++) {
-			this.array = array;
-		}
+		this.array = array;
 	}
 
 	public E set(int posicion, E dato) {
-		int fila = 0;
-		int col = 0;// hacer como si fuese todo una línea
-		int columnas = array[0].length;// El número de columnas
+	    int filas = array.length;
+	    int columnas = array[0].length;
 
-		fila = posicion / columnas;
-		col = posicion % columnas;
+	    if (posicion < 0 || posicion >= filas * columnas) {
+	        throw new IndexOutOfBoundsException("Fuera de rango");
+	    }
 
-		if (posicion >= 0 && posicion <= array.length) {
-			E valorAnterior = array[fila][col];
-			array[fila][col] = dato;
-			return valorAnterior;
-		} else {
-			throw new IndexOutOfBoundsException("Fuera de rango");
-		}
+	    int fila = posicion / columnas;
+	    int col = posicion % columnas;
+
+	    E valorAnterior = array[fila][col];
+	    array[fila][col] = dato;
+	    return valorAnterior;
 	}
 
 	private class Iterator2D implements Iterator<E> {
