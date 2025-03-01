@@ -2,7 +2,6 @@ package es.ubu.inf.edat.s02;
 
 import java.util.AbstractCollection;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 public class ColeccionArray2D<E> extends AbstractCollection<E> {
 
@@ -13,53 +12,66 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 	}
 
 	public E set(int posicion, E dato) {
-	    int filas = array.length;
-	    int columnas = array[0].length;
+		int filas = array.length;
+		int columnas = array[0].length;
 
-	    if (posicion < 0 || posicion >= filas * columnas) {
-	        throw new IndexOutOfBoundsException("Fuera de rango");
-	    }
+		if (posicion < 0 || posicion >= filas * columnas) {
+			throw new IndexOutOfBoundsException("Fuera de rango");
+		}
 
-	    int fila = posicion / columnas;
-	    int col = posicion % columnas;
+		int fila = posicion / columnas;
+		int col = posicion % columnas;
 
-	    E valorAnterior = array[fila][col];
-	    array[fila][col] = dato;
-	    return valorAnterior;
+		E valorAnterior = array[fila][col];
+		array[fila][col] = dato;
+		return valorAnterior;
 	}
-		@Override
-		public Iterator<E> iterator() {
-			return new Iterator2D();
-		}
 
-		@Override
-		public int size() {
-			return (array.length*array[0].length);
-		}
-	
+	@Override
+	public Iterator<E> iterator() {
+		return new Iterator2D();
+	}
+
+	@Override
+	public int size() {
+		return (array.length * array[0].length);
+	}
 
 	private class Iterator2D implements Iterator<E> {
-		Iterator2D iterator = new Iterator2D();
 		private int filaActual = 0;
 		private int columnaActual = 0;
 
 		@Override
 		public boolean hasNext() {
-			if (array[filaActual][columnaActual] != null) {
-				return true;
-			} else {
-				return false;
+			while (filaActual < array.length) {
+				if (columnaActual < array[filaActual].length) {
+					return true;
+				}
 			}
+			return false;
+
 		}
 
 		@Override
 		public E next() {
+			if (columnaActual >= array[filaActual].length) {
+				filaActual++;
+				columnaActual = 0;
+			}
 			return array[filaActual][columnaActual++];
 		}
 
 		@Override
 		public void remove() {
-			array[filaActual][columnaActual] = null;
+			int colAnterior = columnaActual - 1;
+			int filaAnterior = filaActual;
+
+			if (colAnterior < 0) {
+				filaAnterior--;
+				colAnterior = array[filaAnterior].length - 1;
+			}
+
+			array[filaAnterior][colAnterior] = null;
 		}
 
 	}

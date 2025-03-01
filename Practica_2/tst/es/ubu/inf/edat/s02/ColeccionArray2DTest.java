@@ -168,17 +168,17 @@ public class ColeccionArray2DTest {
     	
     	coleccionInteger = new ColeccionArray2D<Integer>(arrayInteger);
     	
-        // Cambiar el valor en la posiciï¿½n 4 (fila 1, columna 1)
+        // Cambiar el valor en la posición 4 (fila 1, columna 1)
         Integer valorAnterior = coleccionInteger.set(4, 99);
         assertEquals(Integer.valueOf(5), valorAnterior);
         assertEquals(Integer.valueOf(99), coleccionInteger.array[1][1]);
 
-        // Cambiar el valor en la posiciï¿½n 0 (fila 0, columna 0)
+        // Cambiar el valor en la posición 0 (fila 0, columna 0)
         valorAnterior = coleccionInteger.set(0, 100);
         assertEquals(Integer.valueOf(1), valorAnterior);
         assertEquals(Integer.valueOf(100), coleccionInteger.array[0][0]);
 
-        // Cambiar el valor en la ï¿½ltima posiciï¿½n (fila 2, columna 2)
+        // Cambiar el valor en la última posición (fila 2, columna 2)
         valorAnterior = coleccionInteger.set(8, 200);
         assertEquals(Integer.valueOf(9), valorAnterior);
         assertEquals(Integer.valueOf(200), coleccionInteger.array[2][2]);
