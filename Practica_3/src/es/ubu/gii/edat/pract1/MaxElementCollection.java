@@ -24,17 +24,7 @@ public class MaxElementCollection<E> implements Collection<E> {
      */
     public MaxElementCollection() {
         this.list = new ArrayList<>(); // Inicializamos la lista vacía.
-        this.comparador = null; // No se necesita comparador, se asume que los elementos son comparables.
-    }
-
-    /**
-     * En caso de que los elementos a almacenar no sean comparables, habrá que pasarle un comparador.
-     * 
-     * @param comp el comparador que se utilizará para comparar los elementos.
-     */
-    public MaxElementCollection(Comparator<E> comp) {
-        this.list = new ArrayList<>(); // Inicializamos la lista vacía.
-        this.comparador = comp; // Usamos el comparador proporcionado.
+        this.comparador = null;
     }
 
     /**
@@ -42,20 +32,27 @@ public class MaxElementCollection<E> implements Collection<E> {
      * Este método no requiere ordenar la lista, solo iterar y comparar los elementos.
      * 
      * @return el mayor elemento de la colección.
+     * @throws IllegalArgumentException si la lista está vacía.
      */
     public E findMaxElement() {
         if (list.isEmpty()) {
-            return null; // Si la lista está vacía, retornamos null.
+            throw new IllegalArgumentException("La colección está vacía");
         }
-        
+
         E maxElement = list.get(0); // Asumimos que el primer elemento es el mayor inicialmente.
-        
+
         for (E element : list) {
             if (comparador != null) {
-                // Si existe un comparador, lo usamos para comparar los elementos.
                 if (comparador.compare(element, maxElement) > 0) {
                     maxElement = element;
-                }          
+                }
+            } else if (element instanceof Comparable) {
+                Comparable<E> comparableElement = (Comparable<E>) element;
+                if (comparableElement.compareTo(maxElement) > 0) {
+                    maxElement = element;
+                }
+            } else {
+                throw new IllegalStateException("Los elementos no son comparables y no se proporcionó un comparador");
             }
         }
         return maxElement;
@@ -65,15 +62,28 @@ public class MaxElementCollection<E> implements Collection<E> {
      * Método para encontrar el mayor elemento, ordenando primero la lista.
      * 
      * @return el mayor elemento de la colección, después de ordenar la lista.
+     * @throws IllegalArgumentException si la lista está vacía.
      */
     public E findMaxElementBySorting() {
         if (list.isEmpty()) {
-            return null; // Si la lista está vacía, retornamos null.
+            throw new IllegalArgumentException("La colección está vacía");
         }
-        
-        // Si se proporcionó un comparador, usamos Collections.sort para ordenar con el comparador.
+
         if (comparador != null) {
             Collections.sort(list, comparador);
+        } else {
+            // Usar un comparador por defecto que funcione con Comparable
+            Collections.sort(list, new Comparator<E>() {
+                @Override
+                public int compare(E o1, E o2) {
+                    if (o1 instanceof Comparable && o2 instanceof Comparable) {
+                        Comparable<E> c1 = (Comparable<E>) o1;
+                        return c1.compareTo(o2);
+                    } else {
+                        throw new IllegalStateException("Los elementos no son comparables y no se proporcionó un comparador");
+                    }
+                }
+            });
         }
 
         // Una vez ordenada la lista, el último elemento es el mayor.
