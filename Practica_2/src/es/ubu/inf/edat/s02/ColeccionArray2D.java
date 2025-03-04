@@ -5,10 +5,9 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Clase que representa una colección de elementos almacenados en una matriz
- * bidimensional.
- * 
- * También proporciona un iterador para recorrer los valores dentro del rango.
+ * Clase que representa una colección de elementos genéricos almacenados en una
+ * matriz bidimensional. Proporciona métodos para gestionar los elementos, como
+ * establecer valores, obtener el tamaño y recorrerlos con un iterador.
  * 
  * @param <E> el tipo de elementos que contiene la colección.
  * 
@@ -19,10 +18,9 @@ import java.util.NoSuchElementException;
  * @since 1.0
  * @version 1.0.1
  */
-
 public class ColeccionArray2D<E> extends AbstractCollection<E> {
 
-	/** Matriz bidimensional que almacena los elementos. */
+	/** Matriz bidimensional genérica que almacena los elementos de la colección. */
 	public E[][] array;
 
 	/**
@@ -36,8 +34,8 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 	}
 
 	/**
-	 * Establece un valor en una posición específica de la matriz y devuelve el
-	 * valor que se encontraba en la posición anteriromente.
+	 * Establece un valor en una posición específica de la matriz bidimensional y
+	 * devuelve el valor previamente almacenado en esa posición.
 	 *
 	 * @param posicion La posición lineal dentro de la matriz.
 	 * @param dato     El dato a almacenar en la posición especificada.
@@ -60,7 +58,7 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 	}
 
 	/**
-	 * Devuelve un iterador sobre los elementos de la matriz.
+	 * Devuelve un iterador para recorrer los elementos de la matriz bidimensional.
 	 *
 	 * @return Un iterador sobre los elementos de la matriz.
 	 */
@@ -70,7 +68,7 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 	}
 
 	/**
-	 * Devuelve el número de elementos en la matriz.
+	 * Devuelve el número total de elementos almacenados en la matriz bidimensional.
 	 *
 	 * @return El número de elementos en la matriz.
 	 */
@@ -91,7 +89,8 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 		private boolean nextCalled = false;
 
 		/**
-		 * Verifica si hay más elementos en la matriz o no.
+		 * Verifica si hay más elementos en la matriz bidimensional desde la posición
+		 * actual del iterador.
 		 *
 		 * @return si hay más elementos en la colección o no.
 		 */
@@ -108,7 +107,8 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 		}
 
 		/**
-		 * Devuelve el siguiente elemento de la matriz.
+		 * Devuelve el siguiente elemento de la matriz bidimensional en el recorrido del
+		 * iterador.
 		 *
 		 * @return El siguiente elemento en la matriz.
 		 * @throws NoSuchElementException Si no hay más elementos.
@@ -125,8 +125,8 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 		}
 
 		/**
-		 * Elimina el último elemento devuelto por el iterador. Debe llamarse después de
-		 * next().
+		 * Elimina el último elemento devuelto por el iterador. Este método debe
+		 * invocarse después de haber llamado a next().
 		 *
 		 * @throws IllegalStateException Si no se ha llamado antes a next().
 		 */

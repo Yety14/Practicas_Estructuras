@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"es.ubu.inf.edat.s02","l":"ColeccionArray2D"},{"p":"es.ubu.inf.edat.s02","l":"ColeccionArray2D.Iterator2D"}];updateSearchResults();
