@@ -15,7 +15,7 @@ public class MaxElementCollectionTest {
         collection.addAll(List.of(3, 5, 7, 2, 8, 6, 4, 7, 0));
 
         int max = collection.findMaxElement();
-        assertEquals(8, max, "El mayor elemento deberÌa ser 8");
+        assertEquals(8, max, "El mayor elemento deber√≠a ser 8");
     }
 
     @Test
@@ -24,14 +24,16 @@ public class MaxElementCollectionTest {
         collection.addAll(List.of(3, 5, 7, 2, 8, 6, 4, 7, 0));
 
         int max = collection.findMaxElementBySorting();
-        assertEquals(8, max, "El mayor elemento deberÌa ser 8");
+        assertEquals(8, max, "El mayor elemento deber√≠a ser 8");
     }
 
     @Test
     public void testEmptyCollection() {
         MaxElementCollection<Integer> collection = new MaxElementCollection<>();
 
-        assertThrows(IllegalArgumentException.class, collection::findMaxElement, "DeberÌa lanzar una excepciÛn si la lista est· vacÌa");
-        assertThrows(IllegalArgumentException.class, collection::findMaxElementBySorting, "DeberÌa lanzar una excepciÛn si la lista est· vacÌa");
+        assertThrows(IllegalArgumentException.class, collection::findMaxElement, 
+            "Deber√≠a lanzar una excepci√≥n si la lista est√° vac√≠a");
+        assertThrows(IllegalArgumentException.class, collection::findMaxElementBySorting, 
+            "Deber√≠a lanzar una excepci√≥n si la lista est√° vac√≠a");
     }
 }
