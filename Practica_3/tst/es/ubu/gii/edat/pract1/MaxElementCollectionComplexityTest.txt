@@ -1,0 +1,4 @@
+Incluir una clase de prueba de complejidad algoritmica.
+
+Se pueden encontrar algunos ejemplos en: https://github.com/bbaruque/EDAT_ejemplos/tree/master/es/ubu/gii/edat/s03_Rendimiento
+Para este problema, es recomendable fijarse sobretodo en la Demo 02.
