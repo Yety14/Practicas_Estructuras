@@ -8,7 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Clase contenedor. Implementa una Colección. Internamente almacenará los datos dentro de una lista. 
+ * Clase contenedor. Implementa una Colección. Internamente almacenará los datos
+ * dentro de una lista.
  * 
  * @author bbaruque
  *
@@ -19,68 +20,48 @@ public class MaxElementCollection<E> implements Collection<E> {
     private List<E> list;
     private Comparator<E> comparador;
 
-    /**
-     * Constructor de la colección. Instancia la colección vacía.
-     */
     public MaxElementCollection() {
         this.list = new ArrayList<>(); // Inicializamos la lista vacía.
-        this.comparador = null; // No se necesita comparador, se asume que los elementos son comparables.
+        this.comparador = null; // Sin comparador, asumimos que los elementos son comparables.
     }
 
-    /**
-     * En caso de que los elementos a almacenar no sean comparables, habrá que pasarle un comparador.
-     * 
-     * @param comp el comparador que se utilizará para comparar los elementos.
-     */
     public MaxElementCollection(Comparator<E> comp) {
         this.list = new ArrayList<>(); // Inicializamos la lista vacía.
         this.comparador = comp; // Usamos el comparador proporcionado.
     }
 
-    /**
-     * Método para encontrar el mayor elemento iterando por la lista.
-     * Este método no requiere ordenar la lista, solo iterar y comparar los elementos.
-     * 
-     * @return el mayor elemento de la colección.
-     */
     public E findMaxElement() {
         if (list.isEmpty()) {
-            return null; // Si la lista está vacía, retornamos null.
+            throw new IllegalArgumentException("La lista está vacía");
         }
-        
-        E maxElement = list.get(0); // Asumimos que el primer elemento es el mayor inicialmente.
-        
+
+        E maxElement = list.get(0);
+
         for (E element : list) {
             if (comparador != null) {
-                // Si existe un comparador, lo usamos para comparar los elementos.
                 if (comparador.compare(element, maxElement) > 0) {
                     maxElement = element;
-                }          
+                }
+            } else if (((Comparable<E>) element).compareTo(maxElement) > 0) {
+                maxElement = element;
             }
         }
         return maxElement;
     }
 
-    /**
-     * Método para encontrar el mayor elemento, ordenando primero la lista.
-     * 
-     * @return el mayor elemento de la colección, después de ordenar la lista.
-     */
     public E findMaxElementBySorting() {
         if (list.isEmpty()) {
-            return null; // Si la lista está vacía, retornamos null.
+            throw new IllegalArgumentException("La lista está vacía");
         }
-        
-        // Si se proporcionó un comparador, usamos Collections.sort para ordenar con el comparador.
+
         if (comparador != null) {
             Collections.sort(list, comparador);
+        } else {
+            Collections.sort((List<Comparable>) list);
         }
 
-        // Una vez ordenada la lista, el último elemento es el mayor.
         return list.get(list.size() - 1);
     }
-
-    // Métodos requeridos por la interfaz Collection<E>
 
     @Override
     public int size() {
