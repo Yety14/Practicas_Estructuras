@@ -17,14 +17,18 @@ import java.util.List;
  */
 public class MaxElementCollection<E> implements Collection<E> {
 
-    private List<E> list;
+	private List<E> list;
     private Comparator<E> comparador;
 
     public MaxElementCollection() {
         this.list = new ArrayList<>(); // Inicializamos la lista vacía.
         this.comparador = null;
     }
-
+    
+    public void rellenarLista(List<E>lista) {
+    	this.list=lista;
+    }
+    
     /**
      * Método para encontrar el mayor elemento iterando por la lista.
      * Este método no requiere ordenar la lista, solo iterar y comparar los elementos.

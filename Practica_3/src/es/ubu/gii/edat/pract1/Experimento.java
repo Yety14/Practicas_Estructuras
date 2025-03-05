@@ -1,7 +1,6 @@
 package es.ubu.gii.edat.pract1;
 
 import es.ubu.gii.edat.datos.GeneradorEnteros;
-import java.util.List;
 import java.util.Scanner;
 
 public class Experimento {
@@ -11,12 +10,17 @@ public class Experimento {
         try (Scanner escaner = new Scanner(System.in)) {
             System.out.println("Dame el número de elementos a comparar:");
             int datos = escaner.nextInt();
-
-            List<Integer> lista = GeneradorEnteros.listaAleatoria(datos);
-            System.out.println("Lista generada: " + lista);
-
-            long t0 = System.currentTimeMillis();
-            System.out.println("Tiempo actual en milisegundos: " + t0);
+            
+            MaxElementCollection<Integer> coleccion=new MaxElementCollection<>();
+            coleccion.rellenarLista(GeneradorEnteros.listaAleatoria(datos));
+            long t0_i = System.currentTimeMillis();
+            coleccion.findMaxElementBySorting();
+            long t0_f = System.currentTimeMillis();
+            System.out.println("Tiempo de buscar mayor por Sorting en milisegundos: " + (t0_f-t0_i));
+            long t1_i = System.currentTimeMillis();
+            coleccion.findMaxElement();
+            long t1_f = System.currentTimeMillis();
+            System.out.println("Tiempo de buscar mayor en milisegundos: " + (t1_f-t1_i));
         } catch (Exception e) {
             System.err.println("Error: Entrada no válida.");
             e.printStackTrace();
