@@ -36,7 +36,8 @@ public class MaxElementCollection<E> implements Collection<E> {
      * @return el mayor elemento de la colección.
      * @throws IllegalArgumentException si la lista está vacía.
      */
-    public E findMaxElement() {
+    @SuppressWarnings("unchecked")
+	public E findMaxElement() {
         if (list.isEmpty()) {
             throw new IllegalArgumentException("La colección está vacía");
         }
@@ -74,7 +75,7 @@ public class MaxElementCollection<E> implements Collection<E> {
         if (comparador != null) {
             Collections.sort(list, comparador);
         } else {
-            Collections.sort((List<Comparable>) list);
+            throw new IllegalArgumentException("El comparador está vacía");
 
         }
         return list.get(list.size() - 1);
