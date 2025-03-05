@@ -15,9 +15,9 @@ import java.util.List;
  *
  * @param <E> el tipo de elementos que contiene la colección.
  */
-public class MaxElementCollection<E> implements Collection<E> {
+public class MaxElementCollection<E extends Comparable<E>> implements Collection<E> {
 
-	private List<E> list;
+    private List<E> list;
     private Comparator<E> comparador;
 
     public MaxElementCollection() {
@@ -25,8 +25,8 @@ public class MaxElementCollection<E> implements Collection<E> {
         this.comparador = null;
     }
     
-    public void rellenarLista(List<E>lista) {
-    	this.list=lista;
+    public void rellenarLista(List<E> lista) {
+        this.list = lista;
     }
     
     /**
@@ -36,8 +36,7 @@ public class MaxElementCollection<E> implements Collection<E> {
      * @return el mayor elemento de la colección.
      * @throws IllegalArgumentException si la lista está vacía.
      */
-    @SuppressWarnings("unchecked")
-	public E findMaxElement() {
+    public E findMaxElement() {
         if (list.isEmpty()) {
             throw new IllegalArgumentException("La colección está vacía");
         }
@@ -48,14 +47,10 @@ public class MaxElementCollection<E> implements Collection<E> {
                 if (comparador.compare(element, maxElement) > 0) {
                     maxElement = element;
                 }
-
-            } else if (element instanceof Comparable) {
-                Comparable<E> comparableElement = (Comparable<E>) element;
-                if (comparableElement.compareTo(maxElement) > 0) {
+            } else {
+                if (element.compareTo(maxElement) > 0) {
                     maxElement = element;
                 }
-            } else {
-                throw new IllegalStateException("Los elementos no son comparables y no se proporcionó un comparador");
             }
         }
         return maxElement;
@@ -75,8 +70,7 @@ public class MaxElementCollection<E> implements Collection<E> {
         if (comparador != null) {
             Collections.sort(list, comparador);
         } else {
-            throw new IllegalArgumentException("El comparador está vacía");
-
+            Collections.sort(list);
         }
         return list.get(list.size() - 1);
     }
