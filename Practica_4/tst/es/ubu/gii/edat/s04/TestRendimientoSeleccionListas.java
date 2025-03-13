@@ -1,135 +1,167 @@
 package es.ubu.gii.edat.s04;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
 
 /**
- * Clase para la prueba de la complejidad algor�tmica del ejercicio de listas
+ * Clase para la prueba de la complejidad algorítmica del ejercicio de listas.
  * 
  * @author bbaruque
- *
+ * @author <a href="mgv1029@alu.ubu.es">María Guzmán Valdezate</a>
+ * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta
+ *         Zapatero</a>
+ * @since 1.0
+ * @version 1.0.1
  */
 public class TestRendimientoSeleccionListas {
 
+	/**
+	 * Tamaño máximo de la lista para las pruebas de rendimiento.
+	 */
 	private int maxSize = 100000;
+
+	/**
+	 * Lista de enteros utilizada para las pruebas de rendimiento.
+	 */
 	private List<Integer> l = null;
+
+	/**
+	 * Lista de listas de enteros utilizada para almacenar resultados de
+	 * particiones.
+	 */
 	private List<List<Integer>> sel = new ArrayList<>();
+
+	/**
+	 * Instancia de la clase SeleccionListas para ejecutar los métodos de selección
+	 * y partición.
+	 */
 	SeleccionListas<Integer> selector = new SeleccionListas();
 
 	/**
-	 * Inicializa una lista aleatoria con un numero determinado de elementos
-	 * @param Max numero de elementos a incluir en la lista
+	 * Inicializa una lista aleatoria con un número determinado de elementos.
+	 * 
+	 * @param Max Número de elementos a incluir en la lista.
 	 */
-	private void before(int Max){
-		l = listaAleatoria(Max); 
+	private void before(int Max) {
+		l = listaAleatoria(Max);
 	}
 
 	/**
-	 * Metodo para vaciar la lista. Se emplea para prepararla para la siguiente prueba.
+	 * Método para vaciar la lista. Se emplea para prepararla para la siguiente
+	 * prueba.
 	 */
-	private void after(){
+	private void after() {
 		l.clear();
 	}
 
 	/**
-	 * Permite generar un listado de numeros enteros aleatorios (repetidos)
-	 * El rango es [0, num Elementos de la lista]
+	 * Genera un array de números enteros aleatorios dentro del rango [0, Max-1].
+	 * Los números pueden repetirse.
 	 * 
-	 * @param Max numero de elementos de la lista
-	 * @return
+	 * @param Max Cantidad de elementos del array y el límite superior (exclusivo).
+	 * @return Un array de enteros aleatorios en el rango [0, Max-1].
 	 */
-	private int[] arrayAleatorio(int Max){
-
+	private int[] arrayAleatorio(int Max) {
 		int[] array = new int[Max];
 
-		for (int j=0; j<Max; j++)
-			array[j] = (int) Math.round(Math.random()*Max);
+		for (int j = 0; j < Max; j++)
+			array[j] = (int) Math.round(Math.random() * Max);
 
 		return array;
-
 	}
 
 	/**
+	 * Genera una lista de números enteros aleatorios con valores en el rango [0,
+	 * Max].
 	 * 
-	 * @param Max
-	 * @return
+	 * @param Max Número de elementos a incluir en la lista.
+	 * @return Lista de enteros generada aleatoriamente.
 	 */
-	private List<Integer> listaAleatoria(int Max){
-
-		// TODO. Intercambiar diferentes tipos de lista para comprobar la diferencia en la complejidad algor�tmica al utilizar cada una.
-
-		//		List<Integer> lista = new ArrayList<Integer>();
+	private List<Integer> listaAleatoria(int Max) {
 		List<Integer> lista = new LinkedList<Integer>();
 
-		for (int j=0; j<Max; j++)
-			lista.add( (int) Math.round(Math.random()*Max) );
+		for (int j = 0; j < Max; j++)
+			lista.add((int) Math.round(Math.random() * Max));
 
 		return lista;
-
-	} // listaAleatoria
+	}
 
 	/**
-	 * Comprueba el rendimiento al ir insertando un mayor numero de elementos en la 
-	 * ListaOrdenada 
+	 * Mide el rendimiento del método de selección múltiple en una lista.
+	 * 
+	 * @param Max Número de elementos a incluir en la lista de prueba.
 	 */
-
 	private void testSeleccionMultiple(int Max) {
+		int[] seleccionados = arrayAleatorio(Max / 2);
 
-		int [] seleccionados = arrayAleatorio(Max/2);
-
-		long ini = System.currentTimeMillis(); 
+		long ini = System.currentTimeMillis();
 		List<Integer> s = selector.seleccionMultiple(l, seleccionados);
 		long fin = System.currentTimeMillis();
 
-		long elapsed = fin-ini;
+		long elapsed = fin - ini;
 
-		System.out.println("SeleccionMultiple,"+Max+","+elapsed);
-
+		System.out.println("SeleccionMultiple," + Max + "," + elapsed);
 	}
 
+	/**
+	 * Mide el rendimiento del método de selección inversa múltiple en una lista.
+	 * 
+	 * @param Max Número de elementos a incluir en la lista de prueba.
+	 */
 	private void testSeleccionInversaMultiple(int Max) {
+		int[] eliminados = arrayAleatorio(Max / 2);
 
-		int [] eliminados = arrayAleatorio(Max/2);
-
-		long ini = System.currentTimeMillis(); 
+		long ini = System.currentTimeMillis();
 		List<Integer> s = selector.seleccionInversaMultiple(l, eliminados);
 		long fin = System.currentTimeMillis();
 
-		long elapsed = fin-ini;
+		long elapsed = fin - ini;
 
-		System.out.println("SeleccionInversaMultiple,"+Max+","+elapsed);
-
+		System.out.println("SeleccionInversaMultiple," + Max + "," + elapsed);
 	}
-	
+
+	/**
+	 * Mide el rendimiento del método de partición de una lista en múltiples
+	 * subconjuntos.
+	 * 
+	 * @param Max Número de elementos a incluir en la lista de prueba.
+	 */
 	private void testParticion(int Max) {
-	    int[] destino = arrayAleatorio(Max);
+		int[] destino = arrayAleatorio(Max);
 
-	    long ini = System.currentTimeMillis();
-	    List<List<Integer>> s = selector.particion(l, destino);
-	    long fin = System.currentTimeMillis();
+		long ini = System.currentTimeMillis();
+		List<List<Integer>> s = selector.particion(l, destino);
+		long fin = System.currentTimeMillis();
 
-	    long elapsed = fin - ini;
+		long elapsed = fin - ini;
 
-	    System.out.println("Particion," + Max + "," + elapsed);
+		System.out.println("Particion," + Max + "," + elapsed);
 	}
 
-	
-	@Test 
-	public void ejecutaTests(){
+	/**
+	 * Ejecuta una serie de pruebas de rendimiento con diferentes tamaños de lista.
+	 */
+	@Test
+	public void ejecutaTests() {
+		for (int i = 0; i <= 10; i++) {
+			int Max = (maxSize / 10) * i;
 
-		for (int i=0; i<= 10; i++){
+			before(Max);
+			testSeleccionMultiple(Max);
+			after();
 
-			int Max = (maxSize/10)*i;
+			before(Max);
+			testSeleccionInversaMultiple(Max);
+			after();
 
-			before(Max); testSeleccionMultiple(Max); after();
-			before(Max); testSeleccionInversaMultiple(Max); after();
-			before(Max); testParticion(Max); after();
+			before(Max);
+			testParticion(Max);
+			after();
+
 			System.out.print("\n");
 		}
 	}
-
 }
