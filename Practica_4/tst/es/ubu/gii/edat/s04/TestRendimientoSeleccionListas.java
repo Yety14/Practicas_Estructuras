@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * Clase para la prueba de la complejidad algorítmica del ejercicio de listas
+ * Clase para la prueba de la complejidad algorï¿½tmica del ejercicio de listas
  * 
  * @author bbaruque
  *
@@ -17,7 +17,8 @@ public class TestRendimientoSeleccionListas {
 
 	private int maxSize = 100000;
 	private List<Integer> l = null;
-	SeleccionListas selector = new SeleccionListas();
+	private List<List<Integer>> sel = new ArrayList<>();
+	SeleccionListas<Integer> selector = new SeleccionListas();
 
 	/**
 	 * Inicializa una lista aleatoria con un numero determinado de elementos
@@ -59,7 +60,7 @@ public class TestRendimientoSeleccionListas {
 	 */
 	private List<Integer> listaAleatoria(int Max){
 
-		// TODO. Intercambiar diferentes tipos de lista para comprobar la diferencia en la complejidad algorítmica al utilizar cada una.
+		// TODO. Intercambiar diferentes tipos de lista para comprobar la diferencia en la complejidad algorï¿½tmica al utilizar cada una.
 
 		//		List<Integer> lista = new ArrayList<Integer>();
 		List<Integer> lista = new LinkedList<Integer>();
@@ -90,8 +91,33 @@ public class TestRendimientoSeleccionListas {
 
 	}
 
-	// TODO. Completar los tests con un test similar para 'seleccionInversa' y 'particion' 
+	private void testSeleccionInversaMultiple(int Max) {
 
+		int [] eliminados = arrayAleatorio(Max/2);
+
+		long ini = System.currentTimeMillis(); 
+		List<Integer> s = selector.seleccionInversaMultiple(l, eliminados);
+		long fin = System.currentTimeMillis();
+
+		long elapsed = fin-ini;
+
+		System.out.println("SeleccionInversaMultiple,"+Max+","+elapsed);
+
+	}
+	
+	private void testParticion(int Max) {
+	    int[] destino = arrayAleatorio(Max);
+
+	    long ini = System.currentTimeMillis();
+	    List<List<Integer>> s = selector.particion(l, destino);
+	    long fin = System.currentTimeMillis();
+
+	    long elapsed = fin - ini;
+
+	    System.out.println("Particion," + Max + "," + elapsed);
+	}
+
+	
 	@Test 
 	public void ejecutaTests(){
 
@@ -100,6 +126,9 @@ public class TestRendimientoSeleccionListas {
 			int Max = (maxSize/10)*i;
 
 			before(Max); testSeleccionMultiple(Max); after();
+			before(Max); testSeleccionInversaMultiple(Max); after();
+			before(Max); testParticion(Max); after();
+			System.out.print("\n");
 		}
 	}
 
