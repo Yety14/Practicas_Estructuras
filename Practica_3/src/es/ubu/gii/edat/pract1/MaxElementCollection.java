@@ -8,140 +8,169 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Clase contenedor. Implementa una Colección. Internamente almacenará los datos
- * dentro de una lista.
+ * Clase contenedor. Implementa la interfaz {@code Collection<E>}, almacenando
+ * los elementos en una lista interna.
  * 
  * @author bbaruque
  * @author <a href="mgv1029@alu.ubu.es">María Guzmán Valdezate</a>
- * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta
- *         Zapatero</a>
+ * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta Zapatero</a>
  * @since 1.0
  * @version 1.0.1
  *
- * @param <E> el tipo de elementos que contiene la colección.
+ * @param <E> el tipo de elementos que contiene la colección. Debe ser
+ *            comparable o proporcionar un {@code Comparator<E>}.
  */
 public class MaxElementCollection<E extends Comparable<E>> implements Collection<E> {
 
-	private List<E> list;
-	private Comparator<E> comparador;
+	  /**
+     * Lista interna que almacena los elementos de la colección.
+     */
+    private List<E> list;
 
-	public MaxElementCollection() {
-		this.list = new ArrayList<>(); // Inicializamos la lista vacía.
-		this.comparador = null;
-	}
+    /**
+     * Comparador opcional para determinar el orden de los elementos en la colección.
+     * Si es {@code null}, se utilizará el orden natural de los elementos.
+     */
+    private Comparator<E> comparador;
 
-	public void rellenarLista(List<E> lista) {
-		this.list = lista;
-	}
+    /**
+     * Crea una nueva colección vacía sin un comparador específico.
+     */
+    public MaxElementCollection() {
+        this.list = new ArrayList<>(); // Inicializamos la lista vacía.
+        this.comparador = null;
+    }
 
-	/**
-	 * Método para encontrar el mayor elemento iterando por la lista. Este método no
-	 * requiere ordenar la lista, solo iterar y comparar los elementos.
-	 * 
-	 * @return el mayor elemento de la colección.
-	 * @throws IllegalArgumentException si la lista está vacía.
-	 */
-	public E findMaxElement() {
-		if (list.isEmpty()) {
-			throw new IllegalArgumentException("La colección está vacía");
-		}
+    /**
+     * Rellena la colección con los elementos de una lista dada.
+     * 
+     * @param lista la lista de elementos con la que se rellenará la colección.
+     * @throws IllegalArgumentException si la lista es {@code null}.
+     */
+    public void rellenarLista(List<E> lista) throws IllegalArgumentException{
+        if (lista == null) {
+            throw new IllegalArgumentException("La lista no puede ser nula");
+        }
+        this.list = lista;
+    }
 
-		E maxElement = list.get(0); // Asumimos que el primer elemento es el mayor inicialmente.
-		for (E element : list) {
-			if (comparador != null) {
-				if (comparador.compare(element, maxElement) > 0) {
-					maxElement = element;
-				}
-			} else {
-				if (element.compareTo(maxElement) > 0) {
-					maxElement = element;
-				}
-			}
-		}
-		return maxElement;
-	}
+    /**
+     * Encuentra el mayor elemento recorriendo la lista sin necesidad de ordenarla previamente.
+     * 
+     * <p>Este método itera sobre todos los elementos de la colección y 
+     * selecciona el máximo comparándolos entre sí. Si se proporciona un 
+     * {@code Comparator<E>}, se usará para determinar el mayor elemento; 
+     * de lo contrario, se utilizará el orden natural de los elementos.</p>
+     * 
+     * @return el mayor elemento de la colección.
+     * @throws IllegalArgumentException si la colección no contiene elementos.
+     */
+    public E findMaxElement() throws IllegalArgumentException{
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("La colección está vacía");
+        }
 
-	/**
-	 * Método para encontrar el mayor elemento, ordenando primero la lista.
-	 * 
-	 * @return el mayor elemento de la colección, después de ordenar la lista.
-	 * @throws IllegalArgumentException si la lista está vacía.
-	 */
-	public E findMaxElementBySorting() {
-		if (list.isEmpty()) {
-			throw new IllegalArgumentException("La colección está vacía");
-		}
+        E maxElement = list.get(0); // Asumimos que el primer elemento es el mayor inicialmente.
+        for (E element : list) {
+            if (comparador != null) {
+                if (comparador.compare(element, maxElement) > 0) {
+                    maxElement = element;
+                }
+            } else {
+                if (element.compareTo(maxElement) > 0) {
+                    maxElement = element;
+                }
+            }
+        }
+        return maxElement;
+    }
 
-		if (comparador != null) {
-			Collections.sort(list, comparador);
-		} else {
-			Collections.sort(list);
-		}
-		return list.get(list.size() - 1);
-	}
+    /**
+     * Encuentra el mayor elemento ordenando primero la colección y seleccionando el último elemento.
+     * 
+     * <p>Este método ordena la colección en orden ascendente y luego 
+     * devuelve el último elemento, que será el mayor. Si se proporciona 
+     * un {@code Comparator<E>}, se utilizará para la ordenación; de lo contrario, 
+     * se usará el orden natural de los elementos.</p>
+     * 
+     * @return el mayor elemento de la colección después de ordenarla.
+     * @throws IllegalArgumentException si la colección no contiene elementos.
+     */
+    public E findMaxElementBySorting() throws IllegalArgumentException{
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("La colección está vacía");
+        }
 
-	@Override
-	public int size() {
-		return list.size();
-	}
+        if (comparador != null) {
+            Collections.sort(list, comparador);
+        } else {
+            Collections.sort(list);
+        }
+        return list.get(list.size() - 1);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return list.isEmpty();
-	}
+    @Override
+    public int size() {
+        return list.size();
+    }
 
-	@Override
-	public boolean contains(Object o) {
-		return list.contains(o);
-	}
+    @Override
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
 
-	@Override
-	public Iterator<E> iterator() {
-		return list.iterator();
-	}
+    @Override
+    public boolean contains(Object o) {
+        return list.contains(o);
+    }
 
-	@Override
-	public Object[] toArray() {
-		return list.toArray();
-	}
+    @Override
+    public Iterator<E> iterator() {
+        return list.iterator();
+    }
 
-	@Override
-	public <T> T[] toArray(T[] a) {
-		return list.toArray(a);
-	}
+    @Override
+    public Object[] toArray() {
+        return list.toArray();
+    }
 
-	@Override
-	public boolean add(E e) {
-		return list.add(e);
-	}
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return list.toArray(a);
+    }
 
-	@Override
-	public boolean remove(Object o) {
-		return list.remove(o);
-	}
+    @Override
+    public boolean add(E e) {
+        return list.add(e);
+    }
 
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		return list.containsAll(c);
-	}
+    @Override
+    public boolean remove(Object o) {
+        return list.remove(o);
+    }
 
-	@Override
-	public boolean addAll(Collection<? extends E> c) {
-		return list.addAll(c);
-	}
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return list.containsAll(c);
+    }
 
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		return list.removeAll(c);
-	}
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        return list.addAll(c);
+    }
 
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		return list.retainAll(c);
-	}
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return list.removeAll(c);
+    }
 
-	@Override
-	public void clear() {
-		list.clear();
-	}
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return list.retainAll(c);
+    }
+
+    @Override
+    public void clear() {
+        list.clear();
+    }
 }
