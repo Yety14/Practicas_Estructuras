@@ -100,24 +100,24 @@ public final class SeleccionListas<E> {
 	 *                                coincide con el del array destino
 	 */
 	public List<List<E>> particion(List<E> lista, int[] destino) throws NoSuchElementException {
-
-		if (lista == null) {
-			throw new NoSuchElementException("La lista no puede ser null");
+		if (lista == null || destino == null) {
+			throw new NoSuchElementException("La lista y el array de destino no pueden ser null");
 		}
+
 		if (lista.size() != destino.length) {
-			throw new NoSuchElementException("Tamaño de lista y destino distinto");
+			throw new NoSuchElementException("El tamaño de la lista y el array de destino no coinciden");
 		}
 
 		List<List<E>> partes = new ArrayList<>();
-
 		for (int i = 0; i < destino.length; i++) {
-			int sublistaIndex = destino[i];
-			if (sublistaIndex >= 0) {
-				while (sublistaIndex >= partes.size()) {
-					partes.add(new ArrayList<E>());
-				}
-				partes.get(sublistaIndex).add(lista.get(i));
+			int indiceSublista = destino[i];
+			if (indiceSublista == -1) {
+				continue;
 			}
+			while (indiceSublista >= partes.size()) {
+				partes.add(new ArrayList<>());
+			}
+			partes.get(indiceSublista).add(lista.get(i));
 		}
 		return partes;
 	}
