@@ -65,8 +65,17 @@ public final class SeleccionListas<E> {
 		if (lista == null) {
 			throw new NoSuchElementException("La lista no puede ser null");
 		}
-
 		List<E> seleccionadosLista = new ArrayList<>();
+
+//		List<E> seleccionadosLista = new ArrayList<>(lista);
+//		for (int i = eliminados.length - 1; i >= 0; i--) {
+//			int elem = eliminados[i];
+//			if (elem >= 0 && elem < seleccionadosLista.size()) {
+//				seleccionadosLista.remove(elem);
+//			} else {
+//				throw new IndexOutOfBoundsException("Elemento pedido fuera del índice de la lista");
+//			}
+//		}
 		int[] lista_nums = new int[lista.size()];
 
 		for (int i = 0; i < lista.size(); i++) {
@@ -101,7 +110,7 @@ public final class SeleccionListas<E> {
 	 */
 	public List<List<E>> particion(List<E> lista, int[] destino) throws NoSuchElementException {
 		if (lista == null || destino == null) {
-			throw new NoSuchElementException("La lista y el array de destino no pueden ser null");
+			throw new NoSuchElementException("La lista o el array de destino no pueden ser null");
 		}
 
 		if (lista.size() != destino.length) {
