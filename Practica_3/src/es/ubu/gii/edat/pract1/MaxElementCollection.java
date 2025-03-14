@@ -39,7 +39,7 @@ public class MaxElementCollection<E extends Comparable<E>> implements Collection
 	 * Crea una nueva colección vacía sin un comparador específico.
 	 */
 	public MaxElementCollection() {
-		this.list = new ArrayList<>(); // Inicializamos la lista vacía.
+		this.list = new ArrayList<>(); 
 		this.comparador = null;
 	}
 
@@ -75,7 +75,7 @@ public class MaxElementCollection<E extends Comparable<E>> implements Collection
 			throw new IllegalArgumentException("La colección está vacía");
 		}
 
-		E maxElement = list.get(0); // Asumimos que el primer elemento es el mayor inicialmente.
+		E maxElement = list.get(0); 
 		for (E element : list) {
 			if (comparador != null) {
 				if (comparador.compare(element, maxElement) > 0) {

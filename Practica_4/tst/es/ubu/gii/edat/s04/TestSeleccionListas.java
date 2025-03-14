@@ -136,17 +136,22 @@ public class TestSeleccionListas {
 		int[] deseleccionados = { 0, 3, 5 }; // Índices a eliminar
 
 		List<Integer> lista = Arrays.asList(enteros);
-		List<Integer> elegidos = seleccionListas.seleccionInversaMultiple(lista, deseleccionados);
+		List<Integer> elegidos_1 = seleccionListas.seleccionInversaMultiple_1(lista, deseleccionados);
+		List<Integer> elegidos_2 = seleccionListas.seleccionInversaMultiple_1(lista, deseleccionados);
 
 		Integer[] respuesta = { 2, 3, 5 }; // Lista esperada después de eliminar elementos
 		List<Integer> esperados = Arrays.asList(respuesta);
 
 		System.out.println("esperados: " + esperados);
-		System.out.println("elegidos: " + elegidos);
+		System.out.println("elegidos: " + elegidos_1);
+		System.out.println("elegidos: " + elegidos_2);
 
-		assertEquals(3, elegidos.size());
-		assertEquals(esperados, elegidos);
-	}
+		assertEquals(3, elegidos_1.size());
+		assertEquals(3, elegidos_2.size());
+
+		assertEquals(esperados, elegidos_1);
+		assertEquals(esperados, elegidos_2);
+}
 
 	/**
 	 * Prueba la partición de una lista en sublistas según un array de categorías.

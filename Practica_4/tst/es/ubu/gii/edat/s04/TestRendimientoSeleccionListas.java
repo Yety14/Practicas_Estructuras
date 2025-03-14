@@ -107,22 +107,41 @@ public class TestRendimientoSeleccionListas {
 	}
 
 	/**
-	 * Mide el rendimiento del método de selección inversa múltiple en una lista.
+	 * Mide el rendimiento del método de selección inversa múltiple en una lista con
+	 * la primera implementación.
 	 * 
 	 * @param Max Número de elementos a incluir en la lista de prueba.
 	 */
-	private void testSeleccionInversaMultiple(int Max) {
+	private void testSeleccionInversaMultiple_1(int Max) {
 		int[] eliminados = arrayAleatorio(Max / 2);
 
 		long ini = System.currentTimeMillis();
-		List<Integer> s = selector.seleccionInversaMultiple(l, eliminados);
+		List<Integer> s = selector.seleccionInversaMultiple_1(l, eliminados);
 		long fin = System.currentTimeMillis();
 
 		long elapsed = fin - ini;
 
-		System.out.println("SeleccionInversaMultiple," + Max + "," + elapsed);
+		System.out.println("SeleccionInversaMultiple en la primera implementación," + Max + "," + elapsed);
 	}
+	
+	/**
+	 * Mide el rendimiento del método de selección inversa múltiple en una lista con
+	 * la segunda implementación.
+	 * 
+	 * @param Max Número de elementos a incluir en la lista de prueba.
+	 */
+	private void testSeleccionInversaMultiple_2(int Max) {
+		int[] eliminados = arrayAleatorio(Max / 2);
 
+		long ini = System.currentTimeMillis();
+		List<Integer> s = selector.seleccionInversaMultiple_2(l, eliminados);
+		long fin = System.currentTimeMillis();
+
+		long elapsed = fin - ini;
+
+		System.out.println("SeleccionInversaMultiple en la segunda implementación," + Max + "," + elapsed);
+	}
+	
 	/**
 	 * Mide el rendimiento del método de partición de una lista en múltiples
 	 * subconjuntos.
@@ -154,9 +173,13 @@ public class TestRendimientoSeleccionListas {
 			after();
 
 			before(Max);
-			testSeleccionInversaMultiple(Max);
+			testSeleccionInversaMultiple_1(Max);
 			after();
-
+			
+			before(Max);
+			testSeleccionInversaMultiple_2(Max);
+			after();
+			
 			before(Max);
 			testParticion(Max);
 			after();
