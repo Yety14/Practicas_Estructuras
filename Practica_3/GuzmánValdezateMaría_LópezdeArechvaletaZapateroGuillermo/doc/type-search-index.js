@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"es.ubu.gii.edat.pract1","l":"Experimento"},{"p":"es.ubu.gii.edat.datos","l":"GeneradorEnteros"},{"p":"es.ubu.gii.edat.pract1","l":"MaxElementCollection"},{"p":"es.ubu.gii.edat.pract1","l":"MaxElementCollectionTest"}];updateSearchResults();
