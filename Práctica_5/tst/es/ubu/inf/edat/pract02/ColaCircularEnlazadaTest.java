@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.ubu.inf.edat.pract02.ColaCircularEnlazada;
 
 public class ColaCircularEnlazadaTest {
 
@@ -205,4 +204,115 @@ public class ColaCircularEnlazadaTest {
 		assertEquals(3, cola.size());
 
 	}
+	/**
+     * Se comprueba que al hacer poll() en una cola vacía se devuelve null.
+     */
+    @Test
+    public void testPollEmpty() {
+        assertNull("poll() en una cola vacía debe devolver null", cola.poll());
+    }
+
+    /**
+     * Se comprueba que el método clear() vacíe correctamente la cola.
+     */
+    @Test
+    public void testClear() {
+        testOffer();
+        cola.clear();
+        assertTrue("Después de clear, la cola debe estar vacía", cola.isEmpty());
+        assertEquals("Después de clear, el tamaño debe ser 0", 0, cola.size());
+    }
+
+    /**
+     * Se comprueba que no se permita insertar elementos nulos en la cola
+     * (si la implementación no lo permite).
+     */
+    @Test(expected = NullPointerException.class)
+    public void testOfferNullException() {
+        cola.offer(null); // Espera una excepción si no se permite nulos
+    }
+
+    /**
+     * Se comprueba que el método remove() en el iterador elimina correctamente un elemento.
+     */
+    @Test
+    public void testIteratorRemove() {
+        testOffer();
+        Iterator<Integer> iter = cola.iterator();
+        iter.next(); // Avanzamos al primer elemento
+        iter.remove(); // Removemos el primer elemento
+
+        assertEquals("Después de eliminar un elemento, el tamaño debe decrecer en 1",
+                     3, cola.size());
+        assertFalse("El primer elemento debería haberse eliminado",
+                    cola.contains(3));
+    }
+
+    /**
+     * Se comprueba que el iterador circular recorra la cola correctamente con múltiples elementos.
+     */
+    @Test
+    public void testCircularIteratorMultipleCycles() {
+        testOffer();
+        Integer[] control = {3, 5, 6, 9};
+
+        Iterator<Integer> circularIt = cola.circularIterator();
+        for (int i = 0; i < 16; i++) {
+            assertTrue("El iterador circular debe indicar que siempre hay un siguiente", circularIt.hasNext());
+
+            int mod = i % 4;
+            assertEquals("Debe devolver los elementos en el orden que se insertaron. Al llegar al final, debe volver a empezar.",
+                    control[mod], circularIt.next());
+        }
+    }
+
+    /**
+     * Se comprueba que contains() funcione correctamente.
+     */
+    @Test
+    public void testContains() {
+        testOffer();
+        assertTrue("La cola debe contener el elemento 5", cola.contains(5));
+        assertFalse("La cola no debe contener el elemento 10", cola.contains(10));
+    }
+
+    /**
+     * Se comprueba que el iterador no permita la eliminación si no se llama a next() previamente.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void testIteratorRemoveWithoutNext() {
+        Iterator<Integer> iter = cola.iterator();
+        iter.remove(); // Esto debería lanzar IllegalStateException
+    }
+
+    /**
+     * Se comprueba que el comportamiento de poll() en una cola vacía devuelve null.
+     */
+    @Test
+    public void testPollOnEmpty() {
+        assertNull("poll() en una cola vacía debe devolver null", cola.poll());
+    }
+
+    /**
+     * Se comprueba que la cola puede ofrecer un solo elemento.
+     */
+    @Test
+    public void testSingleElement() {
+        cola.offer(100);
+        assertEquals("La cola debe contener un solo elemento", 1, cola.size());
+        assertEquals("El único elemento en la cola debe ser 100", (Integer) 100, cola.peek());
+    }
+
+    /**
+     * Se comprueba que la cola sigue funcionando correctamente después de varios poll().
+     */
+    @Test
+    public void testMultiplePolls() {
+        testOffer();
+        cola.poll(); // Remover 3
+        cola.poll(); // Remover 5
+        assertEquals("La cola debe contener 2 elementos después de dos poll()", 2, cola.size());
+        assertEquals("El siguiente elemento en la cola debe ser 6", (Integer) 6, cola.peek());
+    }
+
 }
