@@ -7,17 +7,30 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
+/**
+ * Clase de pruebas unitarias para la clase {@link ColaCircularEnlazada}.
+ * 
+ * <p>
+ * Esta clase contiene métodos de prueba para verificar el correcto funcionamiento
+ * de los métodos de la clase {@link ColaCircularEnlazada}.
+ * </p>
+ * 
+ * @author <a href="mgv1029@alu.ubu.es">María Guzmán Valdezate</a>
+ * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta Zapatero</a>
+ * @since 1.0
+ * @version 1.0.1
+ */
 public class ColaCircularEnlazadaTest {
 
 	/**
-	 * Cola sobre la que se realizan las pruebas
+	 * Cola sobre la que se realizan las pruebas.
 	 */
 	ColaCircularEnlazada<Integer> cola;
 
 	/**
 	 * Antes de cada test, se crea una nueva instancia de la cola.
-	 * @throws Exception
+	 *
+	 * @throws Exception si ocurre un error durante la creación de la instancia de la cola.
 	 */
 	@Before
 	public void setUp() throws Exception {
@@ -25,8 +38,9 @@ public class ColaCircularEnlazadaTest {
 	}
 
 	/**
-	 * Al finalizar cada test, se limpia el contenido de la cola
-	 * @throws Exception
+	 * Al finalizar cada test, se limpia el contenido de la cola.
+	 *
+	 * @throws Exception si ocurre un error durante la limpieza de la cola.
 	 */
 	@After
 	public void tearDown() throws Exception {
