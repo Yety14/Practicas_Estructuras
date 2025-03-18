@@ -6,13 +6,13 @@ import java.util.NoSuchElementException;
 
 public class ColaCircularEnlazada<T> extends AbstractQueue<T> {
 
-	private Nodo cabeza = null;
+	private Nodo inicial = null;
 	private Nodo ultimo = null;
 	private int size = 0;
 
 	@Override
 	public void clear() {
-		cabeza = null;
+		inicial = null;
 		ultimo = null;
 		size = 0;
 	}
@@ -22,28 +22,28 @@ public class ColaCircularEnlazada<T> extends AbstractQueue<T> {
 		if (isEmpty()) {
 			throw new NoSuchElementException("La cola está vacía");
 		}
-		return cabeza.objeto;
+		return inicial.objeto;
 	}
 
 	@Override
 	public boolean contains(Object e) {
-	    if (cabeza == null) {
+	    if (inicial == null) {
 	        return false;
 	    }
-	    Nodo actual = cabeza;
+	    Nodo actual = inicial;
 	    do {
 	        if (actual.objeto.equals(e)) {
 	            return true;
 	        }
 	        actual = actual.siguiente;
-	    } while (actual != cabeza);
+	    } while (actual != inicial);
 	    return false;
 	}
 
 
 	public Iterator<T> circularIterator() {
 	    return new Iterator<T>() {
-	        private Nodo actual = cabeza;
+	        private Nodo actual = inicial;
 
 	        @Override
 	        public boolean hasNext() {
@@ -82,16 +82,16 @@ public class ColaCircularEnlazada<T> extends AbstractQueue<T> {
 		}
 
 		Nodo nuevo = new Nodo(e);
-		if (cabeza == null) {
-			cabeza = nuevo;
+		if (inicial == null) {
+			inicial = nuevo;
 			ultimo = nuevo;
-			cabeza.siguiente = cabeza;
-			cabeza.anterior = cabeza;
+			inicial.siguiente = inicial;
+			inicial.anterior = inicial;
 		} else {
 			nuevo.anterior = ultimo;
-			nuevo.siguiente = cabeza;
+			nuevo.siguiente = inicial;
 			ultimo.siguiente = nuevo;
-			cabeza.anterior = nuevo;
+			inicial.anterior = nuevo;
 			ultimo = nuevo;
 		}
 		size++;
@@ -103,14 +103,14 @@ public class ColaCircularEnlazada<T> extends AbstractQueue<T> {
 		if (isEmpty()) {
 			return null;
 		}
-		T data = cabeza.objeto;
-		if (cabeza == ultimo) {
-			cabeza = null;
+		T data = inicial.objeto;
+		if (inicial == ultimo) {
+			inicial = null;
 			ultimo = null;
 		} else {
-			cabeza = cabeza.siguiente;
-			cabeza.anterior = ultimo;
-			ultimo.siguiente = cabeza;
+			inicial = inicial.siguiente;
+			inicial.anterior = ultimo;
+			ultimo.siguiente = inicial;
 		}
 		size--;
 		return data;
@@ -118,7 +118,7 @@ public class ColaCircularEnlazada<T> extends AbstractQueue<T> {
 
 	@Override
 	public T peek() {
-		return (cabeza == null) ? null : cabeza.objeto;
+		return (inicial == null) ? null : inicial.objeto;
 	}
 
 	@Override
@@ -132,13 +132,13 @@ public class ColaCircularEnlazada<T> extends AbstractQueue<T> {
 	}
 
 	private class CircularIterator implements Iterator<T> {
-		private Nodo actual = cabeza;
+		private Nodo actual = inicial;
 		private boolean firstPass = true;
 		private Nodo lastReturned = null;
 
 		@Override
 		public boolean hasNext() {
-			return actual != null && (firstPass || actual != cabeza);
+			return actual != null && (firstPass || actual != inicial);
 		}
 
 		@Override
@@ -159,7 +159,7 @@ public class ColaCircularEnlazada<T> extends AbstractQueue<T> {
 				throw new IllegalStateException("Debe llamar a next() antes de remove()");
 			}
 
-			if (lastReturned == cabeza) {
+			if (lastReturned == inicial) {
 				poll(); 
 			} else {
 				lastReturned.anterior.siguiente = lastReturned.siguiente;
