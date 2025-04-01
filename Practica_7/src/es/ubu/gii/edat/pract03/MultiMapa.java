@@ -2,56 +2,78 @@ package es.ubu.gii.edat.pract03;
 
 import java.util.*;
 
-public class MultiMapa<K, V> extends AbstractMap<K, Collection<V>> {
-    private final Map<K, Collection<V>> mapa;
+public class MultiMapa<K, V> extends AbstractMap<K, V> {
+	
+    private final Map<K, V> mapa;  
 
     public MultiMapa() {
         this.mapa = new HashMap<>();
     }
 
     @Override
-    public Set<Entry<K, Collection<V>>> entrySet() {
-        return mapa.entrySet();
+    public Set<Entry<K, V>> entrySet() {
+        Set<Entry<K, V>> entries = new HashSet<>();
+        for (Map.Entry<K, V> entry : mapa.entrySet()) {
+            for (V value : entry.getValue()) {
+                entries.add(new AbstractMap.SimpleEntry<>(entry.getKey(), value));
+            }
+        }
+        return entries;
     }
 
     @Override
-    public Collection<V> put(K key, Collection<V> values) {
-        return mapa.put(key, new ArrayList<>(values));
+    public V put(K key, V value) {
+        mapa.putIfAbsent(key, new ArrayList<>());
+        mapa.get(key).add(value);
+        return value;
     }
 
-    public void putAllMappings(K key, Collection<V> values) {
+    public void putAllMappings(K key, List<V> values) {
         mapa.putIfAbsent(key, new ArrayList<>());
         mapa.get(key).addAll(values);
     }
 
-    public Collection<V> getAllMappings(Object key) {
-        return mapa.getOrDefault(key, Collections.emptyList());
+    public List<V> getAllMappings(Object key) {
+        return mapa.getOrDefault(key, new ArrayList<>());
     }
 
-    public Collection<V> removeAllMappings(Object key) {
-        Collection<V> valores = mapa.remove(key);
-        return valores != null ? valores : Collections.emptyList();
+    public List<V> removeAllMappings(Object key) {
+        return mapa.remove(key);
+    }
+    
+    @Override
+    public void clear() {
+        this.mapa.clear();
+    }
+    
+    @Override
+    public V remove(Object key) {
+        V valor = mapa.remove(key);
+        return valor; 
     }
 
-    
-    // Método extra: Verifica si un valor específico está en el MultiMapa
-	@Override
-	public boolean containsValue(Object value) {
-	    for (Collection<V> valores : mapa.values()) {
-	        if (valores.contains(value)) {
-	            return true;
-	        }
-	    }
-	    return false;
-	}
+//	@Override
+//	public V remove(Object key) {
+//	    V values = mapa.remove(key);
+//	    return values != null && !values.isEmpty() ? values.get(0) : null;
+//	}
 
-    
-    // Nuevo método extra: Devuelve el número total de asociaciones clave-valor
-    public int totalMappings() {
-        int count = 0;
-        for (Collection<V> valores : mapa.values()) {
-            count += valores.size();
+    @Override
+    public boolean containsValue(Object value) {
+        for (List<V> values : mapa.values()) {
+            if (values.contains(value)) {
+                return true;
+            }
         }
-        return count;
+        return false;
     }
+   
+    public V getFirstMapping(K key) {
+        List<V> values = mapa.get(key);
+        if (values != null && !values.isEmpty()) {
+            return values.get(0); // Retorna el primer valor de la lista
+        }
+        return null; // Retorna null si no se encuentra la clave o la lista está vacía
+    }
+
 }
