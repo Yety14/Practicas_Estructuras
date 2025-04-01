@@ -6,7 +6,7 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
     
     private final Map<K, List<V>> mapa;
     private int totalSize = 0;
-    private final Map<K, Integer> lastAccessedIndex; // Nuevo campo para rastrear el último índice accedido
+    public final Map<K, Integer> lastAccessedIndex; // Nuevo campo para rastrear el último índice accedido
 
     public MultiMapa() {
         this.mapa = new HashMap<>();
@@ -15,7 +15,7 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        Set<Entry<K, V>> entries = new HashSet<>();
+        Set<Entry<K, V>> entries = new LinkedHashSet<>();
         for (Map.Entry<K, List<V>> entry : mapa.entrySet()) {
             for (V value : entry.getValue()) {
                 entries.add(new AbstractMap.SimpleEntry<>(entry.getKey(), value));
@@ -61,12 +61,13 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
             return null;
         }
         
-        int index = lastAccessedIndex.getOrDefault(key, -1) + 1;
+        int index = lastAccessedIndex.getOrDefault(key, 0);
         if (index >= values.size()) {
             index = 0;
         }
         
-        lastAccessedIndex.put((K) key, index);
+        // Solo actualizamos el índice si realmente vamos a devolver el valor
+        lastAccessedIndex.put((K) key, index+1);
         return values.get(index);
     }
 
@@ -75,23 +76,21 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
         if (values == null || values.isEmpty()) {
             return null;
         }
-        
-        int index = lastAccessedIndex.getOrDefault(key, -1) + 1;
-        if (index >= values.size()) {
-            index = 0;
-        }
-        
-        V removedValue = values.remove(index);
+
+        // Siempre eliminamos el primer elemento (FIFO)
+        V removedValue = values.remove(0);
         totalSize--;
-        lastAccessedIndex.put((K) key, index >= values.size() ? 0 : index);
-        
+
         if (values.isEmpty()) {
             mapa.remove(key);
             lastAccessedIndex.remove(key);
+        } else {
+            lastAccessedIndex.put((K) key, 0); // Reiniciamos el índice
         }
-        
+
         return removedValue;
     }
+
     
     @Override
     public boolean containsValue(Object value) {
@@ -126,4 +125,5 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
     public boolean isEmpty() {
         return totalSize == 0;
     }
+    
 }
