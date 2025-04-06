@@ -86,7 +86,6 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 		/** Columna actual. */
 		private int columnaActual = 0;
 		/** Flag para controlar si se ha llamado a next(). */
-		private boolean nextCalled = false;
 
 		/**
 		 * Verifica si hay más elementos en la matriz bidimensional desde la posición
@@ -120,7 +119,6 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 			}
 			E elemento = array[filaActual][columnaActual];
 			columnaActual++;
-			nextCalled = true; // Marcar que se ha llamado a next()
 			return elemento;
 		}
 
@@ -132,9 +130,6 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 		 */
 		@Override
 		public void remove() {
-			if (!nextCalled) {
-				throw new IllegalStateException("next() debe ser llamado antes de remove()");
-			}
 			int colAnterior = columnaActual - 1;
 			int filaAnterior = filaActual;
 
@@ -144,7 +139,6 @@ public class ColeccionArray2D<E> extends AbstractCollection<E> {
 			}
 
 			array[filaAnterior][colAnterior] = null;
-			nextCalled = false; // Reiniciar el flag
 		}
 	}
 }
