@@ -237,17 +237,13 @@ public class TestSeleccionPredicados {
 		Set<Coche> s = null; 
 
 		s = selector.seleccionaPredicado(coleccion, Condicion.MAYOR, lista.get(1), comparador);
-		//assertEquals("No se ha obtenido el numero de elementos esperado", 3, s.size());
-		assertEquals("No se ha obtenido el numero de elementos esperado", 4, s.size());
-
+		assertEquals("No se ha obtenido el numero de elementos esperado", 3, s.size());
 		for(Coche elem: s){
 			assertTrue("El elemento "+elem+" no es mayor que el de referencia: "+lista.get(1), comparador.compare(lista.get(1), elem) <0 );
 		}
 
 		s = selector.seleccionaPredicado(coleccion, Condicion.MAYORIGUAL, lista.get(1), comparador);
-		//assertEquals("No se ha obtenido el numero de elementos esperado", 4, s.size());
-		assertEquals("No se ha obtenido el numero de elementos esperado", 5, s.size());
-
+		assertEquals("No se ha obtenido el numero de elementos esperado", 4, s.size());
 		for(Coche elem: s){
 			assertTrue("El elemento"+elem+"no es mayor o igual que el de referencia: "+lista.get(1), comparador.compare(lista.get(1), elem) <= 0);
 		}
@@ -259,16 +255,13 @@ public class TestSeleccionPredicados {
 		}
 
 		s = selector.seleccionaPredicado(coleccion, Condicion.MENORIGUAL, lista.get(1), comparador);
-		//assertEquals("No se ha obtenido el numero de elementos esperado", 3, s.size());
-		assertEquals("No se ha obtenido el numero de elementos esperado", 2, s.size());
-
+		assertEquals("No se ha obtenido el numero de elementos esperado", 3, s.size());
 		for(Coche elem: s){
 			assertTrue("El elemento"+elem+"no es menor o igual que el de referencia: "+lista.get(1), comparador.compare(lista.get(1), elem) >= 0);
 		}
 
 		s = selector.seleccionaPredicado(coleccion, Condicion.MENOR, lista.get(1), comparador);
-		//assertEquals("No se ha obtenido el numero de elementos esperado", 2, s.size());
-		assertEquals("No se ha obtenido el numero de elementos esperado", 1, s.size());
+		assertEquals("No se ha obtenido el numero de elementos esperado", 2, s.size());
 
 		for(Coche elem: s){
 			assertTrue("El elemento"+elem+"no es menor que el de referencia: "+lista.get(1),  comparador.compare(lista.get(1), elem) > 0);
