@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"es.ubu.gii.edat.s08","l":"SeleccionPredicados.Condicion"},{"p":"es.ubu.gii.edat.s08","l":"SeleccionPredicados"}];updateSearchResults();
