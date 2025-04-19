@@ -11,6 +11,12 @@ import java.util.LinkedHashSet;
 /**
  * Clase que proporciona métodos genéricos para seleccionar o eliminar elementos
  * de una colección según una condición de comparación.
+ * 
+ * @author <a href="mgv1029@alu.ubu.es">María Guzmán Valdezate</a>
+ * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta
+ *         Zapatero</a>
+ * @since 1.0
+ * @version 1.0.1
  */
 public class SeleccionPredicados {
 
@@ -19,21 +25,20 @@ public class SeleccionPredicados {
 	 */
 	public enum Condicion {
 
-		/** Mayor que (&gt;) */		//hemos puesto las etiquetas HTML para que se vea el simbolo correcto
+		/** Mayor que (&gt;). */ // hemos puesto las etiquetas HTML para que se vea el simbolo correcto.
 		MAYOR,
 
-		/** Mayor o igual que (&ge;) */
+		/** Mayor o igual que (&ge;). */
 		MAYORIGUAL,
 
-		/** Igual a (=) */
+		/** Igual a (=). */
 		IGUAL,
 
-		/** Menor o igual que (&le;) */
+		/** Menor o igual que (&le;). */
 		MENORIGUAL,
 
-		/** Menor que (&lt;) */
+		/** Menor que (&lt;). */
 		MENOR;
-
 
 		/**
 		 * Compara dos elementos usando un {@link Comparator} y esta condición.
