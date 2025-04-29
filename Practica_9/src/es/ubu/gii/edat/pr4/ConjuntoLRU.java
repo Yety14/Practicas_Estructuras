@@ -28,6 +28,19 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 
 	@Override
 	public boolean add(E e) {
+		if (!mapa.containsValue(e)) {
+			if (mapa.size() >= capacidad) {
+				int min = 0;
+				for (int i = 0; i < contador; i++) {
+					if (mapa.containsKey(i)) {
+						if (i < min) {
+							min = i;
+						}
+					}
+				}
+				mapa.remove();
+			}
+		}
 		if (mapa.containsKey(e)) {
 			return false;
 		}
