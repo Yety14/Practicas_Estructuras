@@ -1,5 +1,7 @@
 package es.ubu.gii.edat.pr4;
 import java.util.AbstractSet;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.SortedSet;
 
 public class ConjuntoLRU<a> extends AbstractSet<a> implements SortedSet<a> {
@@ -50,7 +52,35 @@ public class ConjuntoLRU<a> extends AbstractSet<a> implements SortedSet<a> {
 	}
 	
 	@Override
-	 public SortedSet<a>.first(){
+	 public a first(){
 		return null; 
 	 }
+	
+	@Override
+	 public a last(){
+		return null; 
+	 }
+	
+	@Override
+    public SortedSet<a> tailSet(a fromElement){
+		return null;
+	}
+    
+    @Override
+    public Comparator<? super a> comparator(){
+    	return null;
+    }
+
+	@Override
+	public Iterator<a> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SortedSet<a> headSet(a toElement) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
