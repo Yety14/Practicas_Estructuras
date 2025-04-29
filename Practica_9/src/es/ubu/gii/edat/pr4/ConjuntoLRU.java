@@ -21,7 +21,6 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
     }
 	
 	public ConjuntoLRU(int maxSize) {
-		super();
 		this.capacidad = maxSize;
 		this.mapa = new cacheLRUEnlazada<E, E>(capacidad);
 		contador = 0;
