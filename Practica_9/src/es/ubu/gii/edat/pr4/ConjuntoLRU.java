@@ -1,4 +1,5 @@
 package es.ubu.gii.edat.pr4;
+
 import java.util.AbstractSet;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -10,32 +11,45 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 
 	private static final long serialVersionUID = 1L;
 
-	protected int MAXCAPACITY;
-	protected int MAXELEMENT;
+	protected int capacidad;
+	protected int contador;
 
-	protected cacheLRUEnlazada<E, E> control;
+	protected cacheLRUEnlazada<E, E> mapa;
 
 	public ConjuntoLRU(int maxSize) {
 		super();
-		this.MAXCAPACITY = maxSize;
-		this.control = new cacheLRUEnlazada<E, E>(MAXCAPACITY);
+		this.capacidad = maxSize;
+		this.mapa = new cacheLRUEnlazada<E, E>(capacidad);
 	}
 
 	@Override
 	public boolean add(E e) {
-		if (control.containsKey(e)) {
+		if (!mapa.containsValue(e)) {
+			if (mapa.size() >= capacidad) {
+				int min = 0;
+				for (int i = 0; i < contador; i++) {
+
+					if (mapa.containsKey(i)) {
+						if (i < min) {
+							min = i;
+						}
+					}
+				}
+			}
+		}
+		if (mapa.containsKey(e)) {
 			return false;
 		}
 
-		control.put(e, e);
+		mapa.put(e, e);
 
 		return true;
 	}
 
 	@Override
 	public boolean remove(Object o) {
-		if (control.containsKey(o)) {
-			control.remove(o);
+		if (mapa.containsKey(o)) {
+			mapa.remove(o);
 			return true;
 		}
 
@@ -44,34 +58,34 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 
 	@Override
 	public int size() {
-		return control.size();
+		return mapa.size();
 	}
-	
+
 	@Override
 	public SortedSet<E> subSet(E a, E b) {
 		// TODO Auto-generated method stub
-        return null;	
-	}
-	
-	@Override
-	 public E first(){
-		return null; 
-	 }
-	
-	@Override
-	 public E last(){
-		return null; 
-	 }
-	
-	@Override
-    public SortedSet<E> tailSet(E fromElement){
 		return null;
 	}
-    
-    @Override
-    public Comparator<? super E> comparator(){
-    	return null;
-    }
+
+	@Override
+	public E first() {
+		return null;
+	}
+
+	@Override
+	public E last() {
+		return null;
+	}
+
+	@Override
+	public SortedSet<E> tailSet(E fromElement) {
+		return null;
+	}
+
+	@Override
+	public Comparator<? super E> comparator() {
+		return null;
+	}
 
 	@Override
 	public Iterator<E> iterator() {
