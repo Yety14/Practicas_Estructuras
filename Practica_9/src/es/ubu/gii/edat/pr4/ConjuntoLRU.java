@@ -6,23 +6,23 @@ import java.util.SortedSet;
 
 import es.ubu.gii.edat.utils.cacheLRUEnlazada;
 
-public class ConjuntoLRU<a> extends AbstractSet<a> implements SortedSet<a> {
+public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 
 	private static final long serialVersionUID = 1L;
 
 	protected int MAXCAPACITY;
 	protected int MAXELEMENT;
 
-	protected cacheLRUEnlazada<a, a> control;
+	protected cacheLRUEnlazada<E, E> control;
 
 	public ConjuntoLRU(int maxSize) {
 		super();
 		this.MAXCAPACITY = maxSize;
-		this.control = new cacheLRUEnlazada<a, a>(MAXCAPACITY);
+		this.control = new cacheLRUEnlazada<E, E>(MAXCAPACITY);
 	}
 
 	@Override
-	public boolean add(a e) {
+	public boolean add(E e) {
 		if (control.containsKey(e)) {
 			return false;
 		}
@@ -48,39 +48,39 @@ public class ConjuntoLRU<a> extends AbstractSet<a> implements SortedSet<a> {
 	}
 	
 	@Override
-	public SortedSet<a> subSet(a a, a b) {
+	public SortedSet<E> subSet(E a, E b) {
 		// TODO Auto-generated method stub
         return null;	
 	}
 	
 	@Override
-	 public a first(){
+	 public E first(){
 		return null; 
 	 }
 	
 	@Override
-	 public a last(){
+	 public E last(){
 		return null; 
 	 }
 	
 	@Override
-    public SortedSet<a> tailSet(a fromElement){
+    public SortedSet<E> tailSet(E fromElement){
 		return null;
 	}
     
     @Override
-    public Comparator<? super a> comparator(){
+    public Comparator<? super E> comparator(){
     	return null;
     }
 
 	@Override
-	public Iterator<a> iterator() {
+	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SortedSet<a> headSet(a toElement) {
+	public SortedSet<E> headSet(E toElement) {
 		// TODO Auto-generated method stub
 		return null;
 	}
