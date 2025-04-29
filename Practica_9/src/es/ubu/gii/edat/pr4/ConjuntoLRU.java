@@ -28,6 +28,19 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 
 	@Override
 	public boolean add(E e) {
+		if (!mapa.containsValue(e)) {
+			if (mapa.size() >= capacidad) {
+				int min = 0;
+				for (int i = 0; i < contador; i++) {
+
+					if (mapa.containsKey(i)) {
+						if (i < min) {
+							min = i;
+						}
+					}
+				}
+			}
+		}
 		if (mapa.containsKey(e)) {
 			return false;
 		}
@@ -52,7 +65,7 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	public int size() {
 		return mapa.size();
 	}
-	
+
 	@Override
 	public SortedSet<E> subSet(E a, E b) {
 		// TODO Auto-generated method stub
@@ -86,11 +99,26 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
     public SortedSet<E> tailSet(E fromElement){
 		return null;
 	}
-    
-    @Override
-    public Comparator<? super E> comparator(){
-    	return null;
-    }
+
+	@Override
+	public E first() {
+		return null;
+	}
+
+	@Override
+	public E last() {
+		return null;
+	}
+
+	@Override
+	public SortedSet<E> tailSet(E fromElement) {
+		return null;
+	}
+
+	@Override
+	public Comparator<? super E> comparator() {
+		return null;
+	}
 
 
 	@Override
