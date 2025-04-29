@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedSet;
 
+import es.ubu.gii.edat.utils.cacheLRUEnlazada;
+
 public class ConjuntoLRU<a> extends AbstractSet<a> implements SortedSet<a> {
 
 	private static final long serialVersionUID = 1L;
