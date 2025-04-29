@@ -1,25 +1,30 @@
 package es.ubu.gii.edat.pr4;
 
 import java.util.AbstractSet;
+import java.util.SortedSet;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.SortedSet;
 
 import es.ubu.gii.edat.utils.cacheLRUEnlazada;
 
 public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 
-	private static final long serialVersionUID = 1L;
 
-	protected int capacidad;
-	protected int contador;
-
-	protected cacheLRUEnlazada<E, E> mapa;
-
+	private int capacidad;
+	private int contador;
+	private cacheLRUEnlazada<E, E> mapa;
+	private int inicial = 0;
+	private int fin = 0;
+    
+	public ConjuntoLRU() {
+        throw new UnsupportedOperationException("Constructor por defecto no permitido.");
+    }
+	
 	public ConjuntoLRU(int maxSize) {
 		super();
 		this.capacidad = maxSize;
 		this.mapa = new cacheLRUEnlazada<E, E>(capacidad);
+		contador = 0;
 	}
 
 	@Override
@@ -42,7 +47,7 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		}
 
 		mapa.put(e, e);
-
+		contador++;
 		return true;
 	}
 
@@ -50,6 +55,7 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	public boolean remove(Object o) {
 		if (mapa.containsKey(o)) {
 			mapa.remove(o);
+			contador--;
 			return true;
 		}
 
@@ -64,6 +70,34 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	@Override
 	public SortedSet<E> subSet(E a, E b) {
 		// TODO Auto-generated method stub
+        return null;	
+	}
+	
+	private E encontrar(int i) {
+        Iterator<E> it = iterator();
+        int contador = 0;
+        while (it.hasNext()) {
+            E e = it.next();
+            if (contador == i) {
+                return e;
+            }
+            contador++;
+        }
+        return null;
+	}
+	
+	@Override
+	 public E first(){
+		return encontrar(inicial); 
+	 }
+	
+	@Override
+	 public E last(){
+		return encontrar(fin); 
+	 }
+	
+	@Override
+    public SortedSet<E> tailSet(E fromElement){
 		return null;
 	}
 
@@ -87,14 +121,15 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		return null;
 	}
 
+
 	@Override
-	public Iterator<E> iterator() {
+	public SortedSet<E> headSet(E toElement) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SortedSet<E> headSet(E toElement) {
+	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
