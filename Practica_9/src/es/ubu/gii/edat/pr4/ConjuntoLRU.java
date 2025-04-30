@@ -1,9 +1,11 @@
 package es.ubu.gii.edat.pr4;
 
 import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import es.ubu.gii.edat.utils.cacheLRUEnlazada;
 
@@ -25,37 +27,42 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 
 	@Override
 	public boolean add(E e) {
-		contador++;
-		if (!mapa.containsValue(e)) {
+		contador++; // Cada operación cuenta como un acceso
 
+		if (mapa.containsKey(e)) {
+			// Si ya está, solo actualizamos su valor de acceso
+			mapa.put(e, contador);
+			return false; // no se añadió, ya existía
+		} else {
+			// Si ya está lleno, eliminar el menos usado
 			if (mapa.size() >= capacidad) {
-				int min = 0;
-				for (int i = 0; i < contador; i++) {
-					if (mapa.containsKey(i)) {
-						if (i < min) {
-							min = i;
-						}
-					}
-				}
-				mapa.remove(min);
-				mapa.put(e, contador);
-			} else {
-				mapa.put(e, contador);
+				eliminarMenosUsado();
 			}
+			mapa.put(e, contador); // añadir nuevo con valor de acceso
 			return true;
 		}
-		return false;
+	}
+
+	private void eliminarMenosUsado() {
+		E menosUsado = null;
+		int minAcceso = Integer.MAX_VALUE;
+
+		for (Entry<E, Integer> entry : mapa.entrySet()) {
+			if (entry.getValue() < minAcceso) {
+				minAcceso = entry.getValue();
+				menosUsado = entry.getKey();
+			}
+		}
+
+		if (menosUsado != null) {
+			mapa.remove(menosUsado);
+		}
 	}
 
 	@Override
 	public boolean remove(Object o) {
-		if (mapa.containsKey(o)) {
-			mapa.remove(o);
-			contador--;
-			return true;
-		}
-
-		return false;
+		// No tocar el contador aquí, solo eliminar si existe
+		return mapa.remove(o) != null;
 	}
 
 	@Override
@@ -63,98 +70,185 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		return mapa.size();
 	}
 
-	private E encontrar(int i) {
-		Iterator<E> it = iterator();
-		int contador = 0;
-		while (it.hasNext()) {
-			E e = it.next();
-			if (contador == i) {
-				return e;
-			}
-			contador++;
-		}
-		return null;
-	}
+//	private E encontrar(int i) {
+//		Iterator<E> it = iterator();
+//		int contador = 0;
+//		while (it.hasNext()) {
+//			E e = it.next();
+//			if (contador == i) {
+//				return e;
+//			}
+//			contador++;
+//		}
+//		return null;
+//	}
 
+//	@Override
+//	public E first() {
+//		Iterator<E> it = iterator();
+//		if (!it.hasNext())
+//			throw new IllegalStateException("Conjunto vacío.");
+//		return it.next(); // Primer accedido (menos reciente)
+//	}
+//
+//	@Override
+//	public E last() {
+//		Iterator<E> it = iterator();
+//		E last = null;
+//		while (it.hasNext()) {
+//			last = it.next();
+//		}
+//		if (last == null)
+//			throw new IllegalStateException("Conjunto vacío.");
+//		return last; // Más recientemente accedido
+//	}
 	@Override
 	public E first() {
-		Iterator<E> it = iterator();
-		if (!it.hasNext())
+		if (mapa.isEmpty())
 			throw new IllegalStateException("Conjunto vacío.");
-		return it.next(); // Primer accedido (menos reciente)
+
+		E menosUsado = null;
+		int minAcceso = Integer.MAX_VALUE;
+
+		for (Entry<E, Integer> entry : mapa.entrySet()) {
+			if (entry.getValue() < minAcceso) {
+				minAcceso = entry.getValue();
+				menosUsado = entry.getKey();
+			}
+		}
+		return menosUsado;
 	}
 
 	@Override
 	public E last() {
-		Iterator<E> it = iterator();
-		E last = null;
-		while (it.hasNext()) {
-			last = it.next();
-		}
-		if (last == null)
+		if (mapa.isEmpty())
 			throw new IllegalStateException("Conjunto vacío.");
-		return last; // Más recientemente accedido
+
+		E masUsado = null;
+		int maxAcceso = Integer.MIN_VALUE;
+
+		for (Entry<E, Integer> entry : mapa.entrySet()) {
+			if (entry.getValue() > maxAcceso) {
+				maxAcceso = entry.getValue();
+				masUsado = entry.getKey();
+			}
+		}
+		return masUsado;
 	}
 
 	/*
 	 * obtener los elemento que se han accedido por última vez hace más tiempo que
 	 * el que se facilita como parámetro
 	 */
+//	@Override
+//	public SortedSet<E> headSet(E toElement) {
+//		if (!this.contains(toElement)) {
+//			throw new IllegalArgumentException("Elemento no presente en el conjunto.");
+//		}
+//		SortedSet<E> subConjunto = new ConjuntoLRU<>(this.capacidad);
+//		E actual = encontrar(inicial);
+//		Iterator<E> iterador = this.iterator();
+//		while (iterador.hasNext()) {
+//			if (actual == toElement) {
+//				break;
+//			}
+//			subConjunto.add(actual);
+//			actual = iterador.next();
+//		}
+//		return subConjunto;
+//	}
+
 	@Override
 	public SortedSet<E> headSet(E toElement) {
-		if (!this.contains(toElement)) {
+		if (!mapa.containsKey(toElement))
 			throw new IllegalArgumentException("Elemento no presente en el conjunto.");
-		}
-		SortedSet<E> subConjunto = new ConjuntoLRU<>(this.capacidad);
-		E actual = encontrar(inicial);
-		Iterator<E> iterador = this.iterator();
-		while (iterador.hasNext()) {
-			if (actual == toElement) {
-				break;
+
+		int toAccess = mapa.get(toElement);
+		SortedSet<E> subconjunto = new ConjuntoLRU<>(this.capacidad);
+
+		for (Entry<E, Integer> entry : mapa.entrySet()) {
+			if (entry.getValue() < toAccess) {
+				subconjunto.add(entry.getKey());
 			}
-			subConjunto.add(actual);
-			actual = iterador.next();
 		}
-		return subConjunto;
+		return subconjunto;
 	}
 
 	/*
 	 * obtener los elemento que se han accedido por última vez hace menos tiempo que
 	 * el que se facilita como parámetro
 	 */
+//	@Override
+//	public SortedSet<E> tailSet(E toElement) {
+//		if (!this.contains(toElement)) {
+//			throw new IllegalArgumentException("Elemento no presente en el conjunto.");
+//		}
+//		SortedSet<E> subConjunto = new ConjuntoLRU<>(this.capacidad);
+//		E actual = encontrar(fin);
+//		Iterator<E> iterador = this.iterator();
+//		while (iterador.hasNext()) {
+//			if (actual == toElement) {
+//				break;
+//			}
+//			subConjunto.add(actual);
+//			actual = iterador.next();
+//		}
+//		return subConjunto;
+//	}
 	@Override
-	public SortedSet<E> tailSet(E toElement) {
-		if (!this.contains(toElement)) {
+	public SortedSet<E> tailSet(E fromElement) {
+		if (!mapa.containsKey(fromElement))
 			throw new IllegalArgumentException("Elemento no presente en el conjunto.");
-		}
-		SortedSet<E> subConjunto = new ConjuntoLRU<>(this.capacidad);
-		E actual = encontrar(fin);
-		Iterator<E> iterador = this.iterator();
-		while (iterador.hasNext()) {
-			if (actual == toElement) {
-				break;
+
+		int fromAccess = mapa.get(fromElement);
+		SortedSet<E> subconjunto = new ConjuntoLRU<>(this.capacidad);
+
+		for (Entry<E, Integer> entry : mapa.entrySet()) {
+			if (entry.getValue() >= fromAccess) {
+				subconjunto.add(entry.getKey());
 			}
-			subConjunto.add(actual);
-			actual = iterador.next();
 		}
-		return subConjunto;
+		return subconjunto;
 	}
 
+//	@Override
+//	public SortedSet<E> subSet(E a, E b) {
+//		if (!this.contains(a) || !this.contains(b)) {
+//			throw new IllegalArgumentException("Elemento no presente en el conjunto.");
+//		}
+//		SortedSet<E> subConjunto = new ConjuntoLRU<>(this.capacidad);
+//		Iterator<E> iterador = this.iterator();
+//		while (iterador.hasNext()) {
+//			E actual = iterador.next();
+//			if (actual.equals(a) && actual.equals(b)) {
+//				break;
+//			}
+//			subConjunto.add(actual);
+//		}
+//		return subConjunto;
+//	}
+
 	@Override
-	public SortedSet<E> subSet(E a, E b) {
-		if (!this.contains(a) || !this.contains(b)) {
-			throw new IllegalArgumentException("Elemento no presente en el conjunto.");
+	public SortedSet<E> subSet(E desde, E hasta) {
+		if (!mapa.containsKey(desde) || !mapa.containsKey(hasta))
+			throw new IllegalArgumentException("Alguno de los elementos no está en el conjunto.");
+
+		int accesoDesde = mapa.get(desde);
+		int accesoHasta = mapa.get(hasta);
+
+		if (accesoDesde > accesoHasta) {
+			throw new IllegalArgumentException("El acceso de 'desde' debe ser anterior o igual al de 'hasta'.");
 		}
-		SortedSet<E> subConjunto = new ConjuntoLRU<>(this.capacidad);
-		Iterator<E> iterador = this.iterator();
-		while (iterador.hasNext()) {
-			E actual = iterador.next();
-			if (actual.equals(a) && actual.equals(b)) {
-				break;
+
+		SortedSet<E> subconjunto = new ConjuntoLRU<>(this.capacidad);
+
+		for (Entry<E, Integer> entry : mapa.entrySet()) {
+			int acceso = entry.getValue();
+			if (acceso >= accesoDesde && acceso < accesoHasta) {
+				subconjunto.add(entry.getKey());
 			}
-			subConjunto.add(actual);
 		}
-		return subConjunto;
+		return subconjunto;
 	}
 
 	@Override
@@ -162,9 +256,33 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		return null;
 	}
 
+//	@Override
+//	public Iterator<E> iterator() {
+//		return mapa.values().iterator();
+//	}
 	@Override
 	public Iterator<E> iterator() {
-		return mapa.values().iterator();
+		Iterator<E> baseIterator = new ArrayList<>(mapa.keySet()).iterator();
+
+		return new Iterator<E>() {
+			@Override
+			public boolean hasNext() {
+				return baseIterator.hasNext();
+			}
+
+			@Override
+			public E next() {
+				E elemento = baseIterator.next();
+				contador++; // cada acceso al elemento cuenta
+				mapa.put(elemento, contador); // actualiza momento de acceso
+				return elemento;
+			}
+
+			@Override
+			public void remove() {
+				baseIterator.remove(); // opcional, según quieras soportarlo
+			}
+		};
 	}
 
 }
