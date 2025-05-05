@@ -34,7 +34,7 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	private Integer contador;
 
 	/**
-	 * Estructura de almacenamiento basada en cache LRU con los elementos y su orden de acceso.
+	 * Estructura de almacenamiento basada en cache LRU enlazada con los elementos y su orden de acceso.
 	 */
 	private cacheLRUEnlazada<E, Integer> mapa;
 
