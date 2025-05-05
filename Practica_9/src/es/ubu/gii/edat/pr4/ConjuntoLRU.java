@@ -9,22 +9,62 @@ import java.util.Map.Entry;
 
 import es.ubu.gii.edat.utils.cacheLRUEnlazada;
 
+/**
+ * Implementación de un conjunto con política de reemplazo LRU (Least Recently Used).
+ * Almacena los elementos junto con un contador que representa el orden de acceso.
+ *
+ * @param <E> Tipo de elementos que almacena el conjunto.
+ * 
+ * @author <a href="mgv1029@alu.ubu.es">María Guzmán Valdezate</a>
+ * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta
+ *         Zapatero</a>
+ * @since 1.0
+ * @version 1.0.1
+ */
 public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 
+	/**
+	 * Capacidad máxima del conjunto.
+	 */
 	private int capacidad;
+
+	/**
+	 * Contador para registrar el orden de acceso de los elementos.
+	 */
 	private Integer contador;
+
+	/**
+	 * Estructura de almacenamiento basada en cache LRU con los elementos y su orden de acceso.
+	 */
 	private cacheLRUEnlazada<E, Integer> mapa;
 
-	public ConjuntoLRU() {
+	/**
+	 * Constructor por defecto no permitido.
+	 *
+	 * @throws UnsupportedOperationException siempre que se invoque.
+	 */
+	public ConjuntoLRU() throws UnsupportedOperationException {
 		throw new UnsupportedOperationException("Constructor por defecto no permitido.");
 	}
 
+	/**
+	 * Constructor que permite establecer la capacidad máxima del conjunto.
+	 *
+	 * @param maxSize Capacidad máxima del conjunto.
+	 */
 	public ConjuntoLRU(int maxSize) {
 		this.capacidad = maxSize;
 		this.mapa = new cacheLRUEnlazada<E, Integer>(capacidad);
 		contador = 0;
 	}
 
+	/**
+	 * Añade un elemento al conjunto. Si ya existe, solo actualiza su acceso.
+	 * Si el conjunto ha alcanzado su capacidad, elimina el menos recientemente usado.
+	 *
+	 * @param e Elemento a añadir.
+	 * @return true si se añadió, false si ya existía.
+	 */
 	@Override
 	public boolean add(E e) {
 		contador++; 
@@ -41,6 +81,9 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		}
 	}
 
+	/**
+	 * Elimina el elemento menos recientemente usado del conjunto.
+	 */
 	private void eliminarMenosUsado() {
 		E menosUsado = null;
 		int minAcceso = Integer.MAX_VALUE;
@@ -57,16 +100,33 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		}
 	}
 
+	/**
+	 * Elimina un elemento del conjunto.
+	 *
+	 * @param o Elemento a eliminar.
+	 * @return true si se eliminó, false si no existía.
+	 */
 	@Override
 	public boolean remove(Object o) {
 		return mapa.remove(o) != null;
 	}
 
+	/**
+	 * Devuelve el número de elementos del conjunto.
+	 *
+	 * @return Tamaño actual del conjunto.
+	 */
 	@Override
 	public int size() {
 		return mapa.size();
 	}
 
+	/**
+	 * Devuelve el elemento menos recientemente accedido.
+	 *
+	 * @return Elemento con menor contador de acceso.
+	 * @throws IllegalStateException si el conjunto está vacío.
+	 */
 	@Override
 	public E first() {
 		if (mapa.isEmpty())
@@ -84,6 +144,12 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		return menosUsado;
 	}
 
+	/**
+	 * Devuelve el elemento más recientemente accedido.
+	 *
+	 * @return Elemento con mayor contador de acceso.
+	 * @throws IllegalStateException si el conjunto está vacío.
+	 */
 	@Override
 	public E last() {
 		if (mapa.isEmpty())
@@ -101,9 +167,12 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		return masUsado;
 	}
 
-	/*
-	 * obtener los elemento que se han accedido por última vez hace más tiempo que
-	 * el que se facilita como parámetro
+	/**
+	 * Devuelve un subconjunto con los elementos menos accedidos que el especificado.
+	 *
+	 * @param toElement Elemento de referencia.
+	 * @return Subconjunto con elementos menos accedidos.
+	 * @throws IllegalArgumentException si el elemento no está en el conjunto.
 	 */
 	@Override
 	public SortedSet<E> headSet(E toElement) {
@@ -121,9 +190,12 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		return subconjunto;
 	}
 
-	/*
-	 * obtener los elemento que se han accedido por última vez hace menos tiempo que
-	 * el que se facilita como parámetro
+	/**
+	 * Devuelve un subconjunto con los elementos más accedidos que el especificado.
+	 *
+	 * @param fromElement Elemento de referencia.
+	 * @return Subconjunto con elementos más accedidos.
+	 * @throws IllegalArgumentException si el elemento no está en el conjunto.
 	 */
 	@Override
 	public SortedSet<E> tailSet(E fromElement) {
@@ -141,6 +213,14 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		return subconjunto;
 	}
 
+	/**
+	 * Devuelve un subconjunto con los elementos accedidos entre dos elementos (inclusive el primero, exclusivo el segundo).
+	 *
+	 * @param desde Elemento de inicio.
+	 * @param hasta Elemento de fin.
+	 * @return Subconjunto entre los accesos de ambos elementos.
+	 * @throws IllegalArgumentException si alguno de los elementos no está en el conjunto o el orden es incorrecto.
+	 */
 	@Override
 	public SortedSet<E> subSet(E desde, E hasta) {
 		if (!mapa.containsKey(desde) || !mapa.containsKey(hasta))
@@ -164,11 +244,21 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		return subconjunto;
 	}
 
+	/**
+	 * Devuelve el comparador utilizado por el conjunto.
+	 * 
+	 * @return Siempre null, ya que no se utiliza un comparador explícito.
+	 */
 	@Override
 	public Comparator<? super E> comparator() {
 		return null;
 	}
 
+	/**
+	 * Devuelve un iterador que actualiza el contador de acceso al recorrer los elementos.
+	 *
+	 * @return Iterador de los elementos del conjunto.
+	 */
 	@Override
 	public Iterator<E> iterator() {
 		Iterator<E> baseIterator = new ArrayList<>(mapa.keySet()).iterator();
@@ -193,5 +283,4 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 			}
 		};
 	}
-
 }
