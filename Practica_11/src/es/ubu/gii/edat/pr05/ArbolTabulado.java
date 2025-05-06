@@ -1,17 +1,21 @@
 package es.ubu.gii.edat.pr05;
 
 import java.util.AbstractMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Set;
+import java.util.HashMap;
 
 public class ArbolTabulado<E> extends AbstractMap<E, E> {
-
+	
+    private Map<E,E> mapa; // nodo, padre
+        
 	public ArbolTabulado() {
-		// TODO Auto-generated constructor stub
+		mapa = new HashMap<E,E>();
 	}
 	
 	public ArbolTabulado(int initSize) {
-		// TODO Auto-generated constructor stub
+		mapa = new HashMap<E,E>(initSize);
 	}
 	
 	public E put(E hijo, E padre) {
@@ -19,8 +23,21 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public E remove(Object objeto) {
-		// TODO Auto-generated method stub
+		List<E> desc = descendants((E) objeto);
+		List<E> anc = ancestors((E) objeto);
+
+		if (desc.isEmpty()) {
+			return mapa.remove(objeto);
+		}
+		for (E elemento : desc) {
+			if (depth(elemento)==1) {
+				mapa.put(elemento, anc.get(0));
+				mapa.remove(elemento);
+			}
+
+		}
 		return null;
 	}
 	
@@ -34,14 +51,26 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 		return null;
 	}
 	
-	public int depth(E elemento) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int depth(E elemento) {		//mal
+		List<E> lista = descendants(elemento);
+		int i = 0;
+		for (E elem : lista) {
+			for (E comp : lista) {
+				if (!ancestry(elem).equals(ancestry(comp))) {
+					i++;
+				}
+			}
+		}
+		return i;
 	}
-	
-	public int height(E elemento) {
-		// TODO Auto-generated method stub
-		return 0;
+
+	private E ancestry(E elemento) {
+		//q busque en el mapa el elemento y devuelva su padre
+		return null;
+	}
+	public int height(E elemento) {		//mal
+		List<E> lista = ancestors(elemento);
+		return lista.size();
 	}
 	
 	public List<E> breadthTraverse(){
