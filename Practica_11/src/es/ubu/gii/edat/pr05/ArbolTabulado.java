@@ -1,7 +1,8 @@
 package es.ubu.gii.edat.pr05;
 
 import java.util.AbstractMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.HashMap;
@@ -13,11 +14,11 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 	public ArbolTabulado() {
 		mapa = new HashMap<E,E>();
 	}
-	
+
 	public ArbolTabulado(int initSize) {
 		mapa = new HashMap<E,E>(initSize);
 	}
-	
+
 	public E put(E hijo, E padre) {
 		// TODO Auto-generated method stub
 		return null;
@@ -40,15 +41,25 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 		}
 		return null;
 	}
-	
-	public List<E> descendants(E elemento){
-		// TODO Auto-generated method stub
-		return null;
+
+	public List<E> descendants(E elemento) {
+		List<E> descendientes = new ArrayList<>();
+		for (E clave : mapa.keySet()) {
+			if (clave.equals(elemento)) {
+				descendientes.add(elemento);
+			}
+		}
+		return descendientes;
 	}
-	
-	public List<E> ancestors(E elemento){
-		// TODO Auto-generated method stub
-		return null;
+
+	public List<E> ancestors(E elemento) {
+		List<E> ancestros = new ArrayList<>();
+		for (E valor : mapa) {
+			if (valor.equals(elemento)) {
+				ancestros.add(elemento);
+			}
+		}
+		return ancestros;
 	}
 	
 	public int depth(E elemento) {		//mal
@@ -72,10 +83,10 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 		List<E> lista = ancestors(elemento);
 		return lista.size();
 	}
-	
-	public List<E> breadthTraverse(){
+
+	public List<E> breadthTraverse() {
 		// TODO Auto-generated method stub
-        return null;
+		return null;
 	}
 
 	@Override
@@ -83,7 +94,5 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 }
