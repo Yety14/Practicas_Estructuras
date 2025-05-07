@@ -31,7 +31,7 @@ public class ArbolTabuladoTest {
 	}
 
 	/**
-	 * Comprueba la insercion en el Ã?rbol (elementos individuales)
+	 * Comprueba la insercion en el ï¿½?rbol (elementos individuales)
 	 */
 	@Test
 	public void testInsertar() {
