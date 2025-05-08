@@ -129,8 +129,8 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 
 	public List<E> breadthTraverse() {
 		List<E> lista = new ArrayList<>();
-		int altura = 0 , actual = 0;
-		for (E elem : mapa.keySet()) {	//obtener la altura del arbol
+		int altura = 0, actual = 0;
+		for (E elem : mapa.keySet()) { // obtener la altura del arbol
 			if (height(elem) > altura) {
 				altura = height(elem);
 			}
