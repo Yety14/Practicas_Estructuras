@@ -37,6 +37,9 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 
 	@SuppressWarnings("unchecked")
 	public E remove(Object objeto) {
+	    if (!mapa.containsKey(objeto)) {
+	        return null;
+	    }
 		List<E> desc = descendants((E) objeto);
 		E padre = mapa.get(objeto);
 		List<E> hijosDirectos = new ArrayList<E>();
