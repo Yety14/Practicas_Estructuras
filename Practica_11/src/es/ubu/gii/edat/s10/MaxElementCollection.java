@@ -1,4 +1,4 @@
-package es.ubu.gii.edat.pr05;
+package es.ubu.gii.edat.s10;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.Map;
  * @since 1.0
  * @version 1.0.1
  */
-public class ArbolTabulado<E> extends AbstractMap<E, E> {
+public class MaxElementCollection<E> extends AbstractMap<E, E> {
 
 	/**
 	 * Mapa que almacena la relación hijo-padre (clave-valor).
@@ -29,7 +29,7 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 	/**
 	 * Constructor por defecto que inicializa el mapa vacío.
 	 */
-	public ArbolTabulado() {
+	public MaxElementCollection() {
 		mapa = new HashMap<E, E>();
 	}
 
@@ -38,7 +38,7 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 	 *
 	 * @param initSize Tamaño inicial del mapa.
 	 */
-	public ArbolTabulado(int initSize) {
+	public MaxElementCollection(int initSize) {
 		mapa = new HashMap<E, E>(initSize);
 	}
 
