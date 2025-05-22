@@ -225,12 +225,16 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 	}
 
 	/**
-	 * Devuelve el conjunto de entradas (pares clave-valor) del árbol.
+	 * Devuelve el conjunto de entradas (pares clave-valor) del árbol. Este método
+	 * sobrescribe el método abstracto de la clase AbstractMap y permite la
+	 * compatibilidad con el Java Collections Framework.
 	 *
-	 * @return Conjunto de entradas del árbol
+	 * @return Conjunto de entradas hijo-padre que representa la estructura interna
+	 *         del árbol.
 	 */
 	@Override
 	public Set<Map.Entry<E, E>> entrySet() {
 		return mapa.entrySet();
 	}
+
 }
