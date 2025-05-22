@@ -30,8 +30,8 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 	    }
 
 	    PriorityQueue<E> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
-	    maxHeap.addAll(elementos); // O(n log n), por las inserciones
-	    return maxHeap.peek();     // O(1)
+	    maxHeap.addAll(elementos); 
+	    return maxHeap.peek();     
 	}
 
 
