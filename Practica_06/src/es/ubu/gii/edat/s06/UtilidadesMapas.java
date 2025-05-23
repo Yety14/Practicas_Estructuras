@@ -39,7 +39,14 @@ public class UtilidadesMapas {
 		for (int i = 0; i < listaClaves.size(); i++) {
 			mapa.put(listaClaves.get(i), listaValores.get(i));
 		}
-		return mapa;
+
+/*	    Iterator<K> keyIterator = keys.iterator();
+	    Iterator<V> valueIterator = values.iterator();
+
+	    while (keyIterator.hasNext() && valueIterator.hasNext()) {
+	        mapa.put(keyIterator.next(), valueIterator.next());
+	    }
+	*/	return mapa;
 	}
 
 	/**
