@@ -9,12 +9,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * Clase contenedor. Implementa la interfaz {@code Collection<E>}, almacenando
+ * los elementos en una lista interna.
  * 
  * @author <a href="mgv1029@alu.ubu.es">María Guzmán Valdezate</a>
  * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta
  *         Zapatero</a>
  * @since 1.0
  * @version 1.0.1
+ * 
+ * @param <E> el tipo de elementos que contiene la colección. Debe ser
+ *            comparable o proporcionar un {@code Comparator<E>}.
  */
 public class MaxElementCollection<E extends Comparable<E>> extends AbstractCollection<E> {
 
@@ -25,15 +30,14 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 	}
 
 	public E findMaxElementWithPriorityQueue() throws IllegalArgumentException {
-	    if (elementos.isEmpty()) {
-	        throw new IllegalArgumentException("La colección está vacía");
-	    }
+		if (elementos.isEmpty()) {
+			throw new IllegalArgumentException("La colección está vacía");
+		}
 
-	    PriorityQueue<E> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
-	    maxHeap.addAll(elementos); 
-	    return maxHeap.peek();     
+		PriorityQueue<E> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+		maxHeap.addAll(elementos);
+		return maxHeap.peek();
 	}
-
 
 	/**
 	 * Encuentra el mayor elemento recorriendo la lista sin necesidad de ordenarla
