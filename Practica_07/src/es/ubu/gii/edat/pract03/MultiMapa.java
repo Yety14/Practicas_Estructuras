@@ -64,7 +64,9 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
 	 * @return El valor que se ha insertado.
 	 */
 	public V put(K clave, V valor) {
-		mapa.putIfAbsent(clave, new ArrayList<>());
+		if (!mapa.containsKey(clave)) {
+			mapa.put(clave, new ArrayList<>());
+		}
 		mapa.get(clave).add(valor);
 		tamano++;
 		return valor;
@@ -77,7 +79,9 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
 	 * @param valores Lista de valores a añadir.
 	 */
 	public void putAllMappings(K clave, List<V> valores) {
-		mapa.putIfAbsent(clave, new ArrayList<>());
+		if (!mapa.containsKey(clave)) {
+			mapa.put(clave, new ArrayList<>());
+		}
 		mapa.get(clave).addAll(valores);
 		tamano += valores.size();
 	}
@@ -89,7 +93,8 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
 	 * @return Lista de valores asociados. Si no hay, devuelve una lista vacía.
 	 */
 	public List<V> getAllMappings(Object clave) {
-		return mapa.getOrDefault(clave, new ArrayList<>());
+		List<V> valores = mapa.get(clave);
+		return valores;
 	}
 
 	/**

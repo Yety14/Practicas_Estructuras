@@ -105,7 +105,7 @@ public class UtilidadesMapas {
 			if (!multiMapa.containsKey(entrada.getValue())) {
 				multiMapa.put(entrada.getValue(), new ArrayList<>());
 			}
-			multiMapa.get(entrada.getValue()).add(entrada.getKey()); // Añade la clave a la lista
+			multiMapa.get(entrada.getValue()).add(entrada.getKey());
 		}
 
 		return multiMapa;
