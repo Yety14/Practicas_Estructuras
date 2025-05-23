@@ -175,12 +175,7 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
 	 */
 	@Override
 	public boolean containsValue(Object valor) {
-		for (List<V> lista : mapa.values()) {
-			if (lista.contains(valor)) {
-				return true;
-			}
-		}
-		return false;
+		return mapa.containsValue(valor);
 	}
 
 	/**
