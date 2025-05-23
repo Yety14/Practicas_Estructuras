@@ -96,17 +96,9 @@ public class SeleccionPredicados {
 	public <E extends Comparable<E>> Set<E> seleccionaPredicado(Collection<E> coleccion, Condicion condicion,
 			E referencia) {
 		Set<E> resultado = crearSetMismoTipo(coleccion);
-		if (coleccion instanceof SortedSet) {
-			for (E elemento : (SortedSet<E>) coleccion) {
-				if (condicion.comparar(elemento, referencia)) {
-					resultado.add(elemento);
-				}
-			}
-		} else {
-			for (E elemento : coleccion) {
-				if (condicion.comparar(elemento, referencia)) {
-					resultado.add(elemento);
-				}
+		for (E elemento : coleccion) {
+			if (condicion.comparar(elemento, referencia)) {
+				resultado.add(elemento);
 			}
 		}
 		return resultado;
@@ -150,20 +142,12 @@ public class SeleccionPredicados {
 			Comparator<E> comparador) {
 
 		Set<E> resultado = crearSetMismoTipo(coleccion);
-		if (coleccion instanceof SortedSet) {
-			for (E elemento : (SortedSet<E>) coleccion) {
-				if (condicion.comparar(elemento, referencia, comparador)) {
-					resultado.add(elemento);
-				}
-			}
-		} else {
-			for (E elemento : coleccion) {
-				if (condicion.comparar(elemento, referencia, comparador)) {
-					resultado.add(elemento);
-				}
+
+		for (E elemento : coleccion) {
+			if (condicion.comparar(elemento, referencia, comparador)) {
+				resultado.add(elemento);
 			}
 		}
-
 		return resultado;
 	}
 

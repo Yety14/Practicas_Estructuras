@@ -10,8 +10,9 @@ import java.util.Map.Entry;
 import es.ubu.gii.edat.utils.cacheLRUEnlazada;
 
 /**
- * Implementación de un conjunto con política de reemplazo LRU (Least Recently Used).
- * Almacena los elementos junto con un contador que representa el orden de acceso.
+ * Implementación de un conjunto con política de reemplazo LRU (Least Recently
+ * Used). Almacena los elementos junto con un contador que representa el orden
+ * de acceso.
  *
  * @param <E> Tipo de elementos que almacena el conjunto.
  * 
@@ -34,7 +35,8 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	private Integer contador;
 
 	/**
-	 * Estructura de almacenamiento basada en cache LRU enlazada con los elementos y su orden de acceso.
+	 * Estructura de almacenamiento basada en cache LRU enlazada con los elementos y
+	 * su orden de acceso.
 	 */
 	private cacheLRUEnlazada<E, Integer> mapa;
 
@@ -59,19 +61,19 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	}
 
 	/**
-	 * Añade un elemento al conjunto. Si ya existe, solo actualiza su acceso.
-	 * Si el conjunto ha alcanzado su capacidad, elimina el menos recientemente usado.
+	 * Añade un elemento al conjunto. Si ya existe, solo actualiza su acceso. Si el
+	 * conjunto ha alcanzado su capacidad, elimina el menos recientemente usado.
 	 *
 	 * @param e Elemento a añadir.
 	 * @return true si se añadió, false si ya existía.
 	 */
 	@Override
 	public boolean add(E e) {
-		contador++; 
+		contador++;
 
 		if (mapa.containsKey(e)) {
 			mapa.put(e, contador);
-			return false; 
+			return false;
 		} else {
 			if (mapa.size() >= capacidad) {
 				eliminarMenosUsado();
@@ -168,7 +170,8 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	}
 
 	/**
-	 * Devuelve un subconjunto con los elementos menos accedidos que el especificado.
+	 * Devuelve un subconjunto con los elementos menos accedidos que el
+	 * especificado.
 	 *
 	 * @param toElement Elemento de referencia.
 	 * @return Subconjunto con elementos menos accedidos.
@@ -214,12 +217,14 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	}
 
 	/**
-	 * Devuelve un subconjunto con los elementos accedidos entre dos elementos (inclusive el primero, exclusivo el segundo).
+	 * Devuelve un subconjunto con los elementos accedidos entre dos elementos
+	 * (inclusive el primero, exclusivo el segundo).
 	 *
 	 * @param desde Elemento de inicio.
 	 * @param hasta Elemento de fin.
 	 * @return Subconjunto entre los accesos de ambos elementos.
-	 * @throws IllegalArgumentException si alguno de los elementos no está en el conjunto o el orden es incorrecto.
+	 * @throws IllegalArgumentException si alguno de los elementos no está en el
+	 *                                  conjunto o el orden es incorrecto.
 	 */
 	@Override
 	public SortedSet<E> subSet(E desde, E hasta) {
@@ -255,7 +260,8 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	}
 
 	/**
-	 * Devuelve un iterador que actualiza el contador de acceso al recorrer los elementos.
+	 * Devuelve un iterador que actualiza el contador de acceso al recorrer los
+	 * elementos.
 	 *
 	 * @return Iterador de los elementos del conjunto.
 	 */
