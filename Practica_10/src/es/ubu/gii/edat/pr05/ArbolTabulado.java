@@ -71,40 +71,47 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 	 * @return El nodo padre del elemento eliminado o null si era la raíz.
 	 * @throws IllegalArgumentException Si el nodo no existe en el árbol.
 	 */
-	@SuppressWarnings("unchecked")
+//	@SuppressWarnings("unchecked")
 	public E remove(Object objeto) {
 		if (!mapa.containsKey(objeto)) {
 			throw new IllegalArgumentException("No existe el objeto a eliminar.");
 		}
-		List<E> desc = descendants((E) objeto);
+//		List<E> desc = descendants((E) objeto);
 		E padre = mapa.get(objeto);
-		List<E> hijosDirectos = new ArrayList<>();
-		for (E elemento : desc) {
-			if (mapa.get(elemento) == objeto) {
-				hijosDirectos.add(elemento);
+//		List<E> hijosDirectos = new ArrayList<>();
+		for (Entry<E, E> entry : mapa.entrySet()) {
+			if (entry.getValue() != null && entry.getValue().equals(objeto)) {
+				mapa.put(entry.getKey(), padre);
 			}
 		}
-		if (mapa.get(objeto) == null) {
-			E nuevoRaiz = hijosDirectos.get((int) (Math.random() * hijosDirectos.size()));
-			mapa.put(nuevoRaiz, null);
-			for (E hijo : hijosDirectos) {
-				if (!hijo.equals(nuevoRaiz)) {
-					mapa.put(hijo, nuevoRaiz);
-				}
-			}
-			mapa.remove(objeto);
-			return null;
-		} else {
-			if (desc.isEmpty()) {
-				mapa.remove(objeto);
-				return padre;
-			}
-			for (E elemento : hijosDirectos) {
-				mapa.put((E) elemento, padre);
-			}
-			mapa.remove(objeto);
-			return padre;
-		}
+		mapa.remove(objeto);
+		return padre;
+//		for (E elemento : desc) {
+//			if (mapa.get(elemento) == objeto) {
+//				hijosDirectos.add(elemento);
+//			}
+//		}
+//		if (mapa.get(objeto) == null) {
+//			E nuevoRaiz = hijosDirectos.get((int) (Math.random() * hijosDirectos.size()));
+//			mapa.put(nuevoRaiz, null);
+//			for (E hijo : hijosDirectos) {
+//				if (!hijo.equals(nuevoRaiz)) {
+//					mapa.put(hijo, nuevoRaiz);
+//				}
+//			}
+//			mapa.remove(objeto);
+//			return null;
+//		} else {
+//			if (desc.isEmpty()) {
+//				mapa.remove(objeto);
+//				return padre;
+//			}
+//			for (E elemento : hijosDirectos) {
+//				mapa.put((E) elemento, padre);
+//			}
+//			mapa.remove(objeto);
+//			return padre;
+//		}
 	}
 
 	/**
