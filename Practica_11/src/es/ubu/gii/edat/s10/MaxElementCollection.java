@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Clase contenedor. Implementa la interfaz {@code Collection<E>}, almacenando
- * los elementos en una lista interna.
+ * Clase contenedor que extiende {@link AbstractCollection} y almacena elementos
+ * en una lista interna. Permite encontrar el máximo elemento de distintas
+ * formas.
  * 
  * @author <a href="mgv1029@alu.ubu.es">María Guzmán Valdezate</a>
  * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta
@@ -22,13 +23,29 @@ import java.util.Collection;
  *            comparable o proporcionar un {@code Comparator<E>}.
  */
 public class MaxElementCollection<E extends Comparable<E>> extends AbstractCollection<E> {
-
+	/**
+	 * Lista interna que almacena los elementos de la colección.
+	 */
 	public List<E> elementos;
 
+	/**
+	 * Constructor por defecto que inicializa la lista interna vacía.
+	 */
 	public MaxElementCollection() {
 		elementos = new ArrayList<>();
 	}
 
+	/**
+	 * Encuentra el mayor elemento utilizando una PriorityQueue (max-heap).
+	 * 
+	 * <p>
+	 * Crea una cola de prioridad con un comparador que invierte el orden natural,
+	 * añade todos los elementos, y devuelve el elemento máximo en tiempo constante.
+	 * </p>
+	 * 
+	 * @return el mayor elemento encontrado.
+	 * @throws IllegalArgumentException si la colección está vacía.
+	 */
 	public E findMaxElementWithPriorityQueue() throws IllegalArgumentException {
 		if (elementos.isEmpty()) {
 			throw new IllegalArgumentException("La colección está vacía");
@@ -89,21 +106,43 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 		return elementos.get(elementos.size() - 1);
 	}
 
+	/**
+	 * Añade un elemento a la colección.
+	 * 
+	 * @param e el elemento a añadir.
+	 * @return {@code true} si la colección cambió como resultado de la llamada.
+	 */
 	@Override
 	public boolean add(E e) {
 		return elementos.add(e);
 	}
 
+	/**
+	 * Añade todos los elementos de una colección dada a esta colección.
+	 * 
+	 * @param collection la colección cuyos elementos se añadirán.
+	 * @return {@code true} si la colección cambió como resultado de la llamada.
+	 */
 	@Override
 	public boolean addAll(Collection<? extends E> collection) {
 		return super.addAll(collection);
 	}
 
+	/**
+	 * Devuelve un iterador sobre los elementos en esta colección.
+	 * 
+	 * @return un {@link Iterator} para recorrer los elementos.
+	 */
 	@Override
 	public Iterator<E> iterator() {
 		return elementos.iterator();
 	}
 
+	/**
+	 * Devuelve el número de elementos en esta colección.
+	 * 
+	 * @return el tamaño de la colección.
+	 */
 	@Override
 	public int size() {
 		return elementos.size();

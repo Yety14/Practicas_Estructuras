@@ -17,10 +17,18 @@ import java.util.List;
  * @version 1.0.1
  */
 public class Experimento {
-
+	/**
+	 * Array con los diferentes tamaños de colección que se probarán.
+	 */
 	private static final int[] tamanos = { 10, 100, 1000, 1_000_000, 2_000_000, 2_500_000, 5_000_000, 6_000_000,
 			6_500_000, 7_000_000 };
 
+	/**
+	 * Método principal que ejecuta las pruebas para cada tamaño definido en
+	 * {@link #tamanos}.
+	 * 
+	 * @param args argumentos de línea de comandos (no usados).
+	 */
 	public static void main(String[] args) {
 		for (int n : tamanos) {
 			System.out.println("\n===============================");
