@@ -102,7 +102,9 @@ public class UtilidadesMapas {
 		Map<V, Collection<K>> multiMapa = new HashMap<>();
 
 		for (Map.Entry<K, V> entrada : map.entrySet()) {
-			multiMapa.putIfAbsent(entrada.getValue(), new ArrayList<>()); // Si no existe la clave, crea una nueva lista
+			if (!multiMapa.containsKey(entrada.getValue())) {
+				multiMapa.put(entrada.getValue(), new ArrayList<>());
+			}
 			multiMapa.get(entrada.getValue()).add(entrada.getKey()); // Añade la clave a la lista
 		}
 
