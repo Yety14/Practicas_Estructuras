@@ -88,13 +88,6 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 	 * Encuentra el mayor elemento ordenando primero la colección y seleccionando el
 	 * último elemento.
 	 * 
-	 * <p>
-	 * Este método ordena la colección en orden ascendente y luego devuelve el
-	 * último elemento, que será el mayor. Si se proporciona un
-	 * {@code Comparator<E>}, se utilizará para la ordenación; de lo contrario, se
-	 * usará el orden natural de los elementos.
-	 * </p>
-	 * 
 	 * @return el mayor elemento de la colección después de ordenarla.
 	 * @throws IllegalArgumentException si la colección no contiene elementos.
 	 */
@@ -110,7 +103,7 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 	 * Añade un elemento a la colección.
 	 * 
 	 * @param e el elemento a añadir.
-	 * @return {@code true} si la colección cambió como resultado de la llamada.
+	 * @return true si la colección cambió como resultado de la llamada.
 	 */
 	@Override
 	public boolean add(E e) {
@@ -121,7 +114,7 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 	 * Añade todos los elementos de una colección dada a esta colección.
 	 * 
 	 * @param collection la colección cuyos elementos se añadirán.
-	 * @return {@code true} si la colección cambió como resultado de la llamada.
+	 * @return true si la colección cambió como resultado de la llamada.
 	 */
 	@Override
 	public boolean addAll(Collection<? extends E> collection) {
@@ -137,7 +130,7 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 	/**
 	 * Devuelve un iterador sobre los elementos en esta colección.
 	 * 
-	 * @return un {@link Iterator} para recorrer los elementos.
+	 * @return un Iterator para recorrer los elementos.
 	 */
 	@Override
 	public Iterator<E> iterator() {
