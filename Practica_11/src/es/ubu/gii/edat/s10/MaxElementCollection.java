@@ -125,7 +125,13 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 	 */
 	@Override
 	public boolean addAll(Collection<? extends E> collection) {
-		return super.addAll(collection);
+		boolean changed = false;
+		for (E element : collection) {
+			if (elementos.add(element)) {
+				changed = true;
+			}
+		}
+		return changed;
 	}
 
 	/**

@@ -2,6 +2,7 @@ package es.ubu.gii.edat.s10;
 
 import java.util.AbstractCollection;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -10,34 +11,35 @@ import java.util.PriorityQueue;
  * max-heap. Proporciona métodos para añadir elementos y encontrar el máximo
  * elemento.
  * 
+ * @param <E> el tipo de elementos que contiene la colección. Debe ser
+ *            comparable o proporcionar un {@code Comparator<E>}.
  * @author <a href="mgv1029@alu.ubu.es">María Guzmán Valdezate</a>
  * @author <a href="glz1001@alu.ubu.es">Guillermo López de Arechavaleta
  *         Zapatero</a>
  * @since 1.0
  * @version 1.0.1
  * 
- * @param <E> el tipo de elementos que contiene la colección. Debe ser
- *            comparable o proporcionar un {@code Comparator<E>}.
  */
 public class MaxElementCollectionPQ<E extends Comparable<E>> extends AbstractCollection<E> {
+
 	/**
 	 * PriorityQueue interna configurada como max-heap para almacenar los elementos.
 	 */
 	private PriorityQueue<E> elementosPQ;
 
 	/**
-	 * Constructor que inicializa la PriorityQueue con un comparador inverso para
-	 * funcionar como max-heap.
+	 * Constructor que inicializa la PriorityQueue con orden inverso, configurándola
+	 * como max-heap. Por defecto, en Java la PriorityQueue actúa como un min-heap.
 	 */
 	public MaxElementCollectionPQ() {
-		elementosPQ = new PriorityQueue<>((a, b) -> b.compareTo(a)); // max-heap
+		elementosPQ = new PriorityQueue<>(Collections.reverseOrder());
 	}
 
 	/**
 	 * Añade un elemento a la colección.
 	 * 
 	 * @param e el elemento a añadir.
-	 * @return {@code true} si la colección cambia como resultado de esta llamada.
+	 * @return true si la colección cambia como resultado de esta llamada.
 	 */
 	@Override
 	public boolean add(E e) {
@@ -48,15 +50,10 @@ public class MaxElementCollectionPQ<E extends Comparable<E>> extends AbstractCol
 	 * Añade todos los elementos de la colección especificada a esta colección.
 	 * 
 	 * @param c la colección cuyos elementos se añadirán.
-	 * @return {@code true} si la colección cambia como resultado de esta llamada.
+	 * @return true si la colección cambia como resultado de esta llamada.
 	 */
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-//        boolean changed = false;
-//        for (E e : c) {
-//            changed |= add(e);
-//        }
-//        return changed;
 		return elementosPQ.addAll(c);
 
 	}
@@ -64,15 +61,12 @@ public class MaxElementCollectionPQ<E extends Comparable<E>> extends AbstractCol
 	/**
 	 * Encuentra el mayor elemento recorriendo todos los elementos de la
 	 * PriorityQueue.
-	 * 
-	 * <p>
-	 * Aunque PriorityQueue tiene el máximo en la raíz, este método recorre todos
-	 * los elementos para demostrar la búsqueda manual del máximo.
-	 * </p>
-	 * 
+	 *
 	 * @return el mayor elemento encontrado.
+	 * @throws IllegalArgumentException si la colección está vacía.
 	 */
-	public E findMaxElement() {
+
+	public E findMaxElement() throws IllegalArgumentException {
 		if (elementosPQ.isEmpty()) {
 			throw new IllegalArgumentException("La colección está vacía");
 		}
@@ -86,23 +80,15 @@ public class MaxElementCollectionPQ<E extends Comparable<E>> extends AbstractCol
 		return max;
 	}
 
-	/*
-	 * La q mas te guste
-	 * 
-	 * public E findMaxElement() { MaxElementCollection<E> auxiliar = new
-	 * MaxElementCollection<>(); auxiliar.addAll(this.elementosPQ); // Copiamos los
-	 * datos de la PQ return auxiliar.findMaxElement(); // Llamamos al método ya
-	 * implementado
-	 * 
+	/**
+	 * Obtiene el mayor elemento utilizando la propiedad de max-heap de la
+	 * {@code PriorityQueue}.
+	 *
+	 * @return el mayor elemento (el que está en la raíz del heap).
+	 * @throws IllegalArgumentException si la colección está vacía.
 	 */
 
-	/**
-	 * Obtiene el mayor elemento utilizando la propiedad del max-heap de la
-	 * PriorityQueue.
-	 * 
-	 * @return el mayor elemento (el elemento en la raíz del heap).
-	 */
-	public E findMaxElementInPriorityQueue() {
+	public E findMaxElementInPriorityQueue() throws IllegalArgumentException {
 		if (elementosPQ.isEmpty()) {
 			throw new IllegalArgumentException("La colección está vacía");
 		}
@@ -112,7 +98,7 @@ public class MaxElementCollectionPQ<E extends Comparable<E>> extends AbstractCol
 	/**
 	 * Devuelve un iterador para recorrer los elementos de la colección.
 	 * 
-	 * @return un {@link Iterator} sobre los elementos.
+	 * @return un Iterator sobre los elementos.
 	 */
 	@Override
 	public Iterator<E> iterator() {
