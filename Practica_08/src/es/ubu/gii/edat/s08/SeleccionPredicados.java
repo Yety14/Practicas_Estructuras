@@ -169,6 +169,7 @@ public class SeleccionPredicados {
 		for (E elemento : coleccion) {
 			if (!condicion.comparar(elemento, referencia, comparador)) {
 				resultado.add(elemento);
+				coleccion.remove(elemento);
 			}
 		}
 		return resultado;
