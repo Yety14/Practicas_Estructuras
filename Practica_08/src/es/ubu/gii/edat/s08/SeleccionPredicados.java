@@ -120,6 +120,7 @@ public class SeleccionPredicados {
 		for (E elemento : coleccion) {
 			if (!condicion.comparar(elemento, referencia)) {
 				resultado.add(elemento);
+				coleccion.remove(elemento);
 			}
 		}
 		return resultado;
