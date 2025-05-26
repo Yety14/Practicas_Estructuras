@@ -53,7 +53,7 @@ public class MaxElementCollection<E extends Comparable<E>> extends AbstractColle
 
 		PriorityQueue<E> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
 		maxHeap.addAll(elementos);
-		return maxHeap.peek();
+		return maxHeap.peek();// poll() remove()
 	}
 
 	/**

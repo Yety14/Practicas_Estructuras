@@ -187,8 +187,8 @@ public class ArbolTabulado<E> extends AbstractMap<E, E> {
 		List<E> lista = new ArrayList<>();
 		int altura = 0, actual = 0;
 		for (E elem : mapa.keySet()) {		//bucle para obtener la altura del arbol
-			if (height(elem) > altura) {
-				altura = height(elem);
+			if (depth(elem) > altura) {
+				altura = depth(elem);
 			}
 		}
 		while (actual <= altura) {
