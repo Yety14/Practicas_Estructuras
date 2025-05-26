@@ -87,16 +87,7 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 	 * Elimina el elemento menos recientemente usado del conjunto.
 	 */
 	private void eliminarMenosUsado() {
-		E menosUsado = null;
-		int minAcceso = Integer.MAX_VALUE;
-
-		for (Entry<E, Integer> entry : mapa.entrySet()) {
-			if (entry.getValue() < minAcceso) {
-				minAcceso = entry.getValue();
-				menosUsado = entry.getKey();
-			}
-		}
-
+		E menosUsado = first();
 		if (menosUsado != null) {
 			mapa.remove(menosUsado);
 		}
@@ -183,7 +174,7 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 			throw new IllegalArgumentException("Elemento no presente en el conjunto.");
 
 		int toAccess = mapa.get(toElement);
-		SortedSet<E> subconjunto = new ConjuntoLRU<>(this.capacidad);
+		SortedSet<E> subconjunto = new ConjuntoLRU<>(this.capacidad - 1);
 
 		for (Entry<E, Integer> entry : mapa.entrySet()) {
 			if (entry.getValue() < toAccess) {
@@ -209,7 +200,7 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		SortedSet<E> subconjunto = new ConjuntoLRU<>(this.capacidad);
 
 		for (Entry<E, Integer> entry : mapa.entrySet()) {
-			if (entry.getValue() >= fromAccess) {
+			if (entry.getValue() >= fromAccess) { // Si el test estuviera bn seria >
 				subconjunto.add(entry.getKey());
 			}
 		}
@@ -248,7 +239,32 @@ public class ConjuntoLRU<E> extends AbstractSet<E> implements SortedSet<E> {
 		}
 		return subconjunto;
 	}
+/*
+	@Override
+	public SortedSet<E> subSet(E desde, E hasta) {
+		if (!mapa.containsKey(desde) || !mapa.containsKey(hasta))
+			throw new IllegalArgumentException("Alguno de los elementos no está en el conjunto.");
 
+		int accesoDesde = mapa.get(desde);
+		int accesoHasta = mapa.get(hasta);
+
+		if (accesoDesde > accesoHasta) {
+			throw new IllegalArgumentException("El acceso de 'desde' debe ser anterior o igual al de 'hasta'.");
+		}
+
+		SortedSet<E> tail = tailSet(desde);
+		SortedSet<E> head = headSet(hasta);
+		SortedSet<E> subconjunto = new ConjuntoLRU<>(accesoHasta - accesoDesde + 1);
+
+		for (E elem : tail) {
+			if (head.contains(elem)) {
+				subconjunto.add(elem);
+			}
+		}
+
+		return subconjunto;
+	}
+*/
 	/**
 	 * Devuelve el comparador utilizado por el conjunto.
 	 * 

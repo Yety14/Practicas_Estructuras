@@ -139,6 +139,20 @@ public class MultiMapa<K, V> extends AbstractMap<K, V> {
 		}
 
 		ultimoAcceso.put((K) clave, indice + 1);
+
+		/*
+		if (!ultimoAcceso.containsKey(clave)) {
+			ultimoAcceso.put(clave, 1); // primer acceso, siguiente será índice 1
+			indice = 0; // accedemos al índice 0
+		} else {
+			int indice = ultimoAcceso.get(clave);
+			if (indice >= valores.size()) {
+				indice = 0;
+			}
+			ultimoAcceso.put(clave, indice + 1);
+		}
+		*/
+		
 		return valores.get(indice);
 	}
 
