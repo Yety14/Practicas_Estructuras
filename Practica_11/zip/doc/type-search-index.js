@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"es.ubu.gii.edat.s10","l":"Experimento"},{"p":"es.ubu.gii.edat.s10","l":"MaxElementCollection"},{"p":"es.ubu.gii.edat.s10","l":"MaxElementCollectionPQ"}];updateSearchResults();

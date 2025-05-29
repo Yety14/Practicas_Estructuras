@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"es.ubu.gii.edat.s10"}];updateSearchResults();
